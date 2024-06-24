@@ -23,9 +23,9 @@ Major subparts to it are:
 
 This is where all the coin selection algorithms are executed and the best one is chosen based on the waste metric
   1. ChooseSelectionResult: https://github.com/bitcoin/bitcoin/blob/master/src/wallet/spend.cpp#L685
-    - max_input_weight deduction: https://github.com/bitcoin/bitcoin/blob/master/src/wallet/spend.cpp#L699
-  2. SelectCoinsBnB: https://github.com/bitcoin/bitcoin/blob/master/src/wallet/coinselection.cpp#L93C31-L93C45
-  3. BnB honouring max_weight argument: https://github.com/bitcoin/bitcoin/blob/master/src/wallet/coinselection.cpp#L190
+       1. max_input_weight deduction: https://github.com/bitcoin/bitcoin/blob/master/src/wallet/spend.cpp#L699
+  3. SelectCoinsBnB: https://github.com/bitcoin/bitcoin/blob/master/src/wallet/coinselection.cpp#L93C31-L93C45
+  4. BnB honouring max_weight argument: https://github.com/bitcoin/bitcoin/blob/master/src/wallet/coinselection.cpp#L190
 
 
 ### All CoinSelection algorithms honour the max_weight criteria in case of automatic coin selection:
