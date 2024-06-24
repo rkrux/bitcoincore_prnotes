@@ -28,7 +28,7 @@ This is where all the coin selection algorithms are executed and the best one is
   - BnB honouring max_weight argument: https://github.com/bitcoin/bitcoin/blob/master/src/wallet/coinselection.cpp#L190
 
 All CoinSelection algorithms honour the max_weight criteria in case of automatic coin selection:
-https://github.com/bitcoin/bitcoin/blob/master/src/wallet/coinselection.cpp#L190
-https://github.com/bitcoin/bitcoin/blob/master/src/wallet/coinselection.cpp#L325
-https://github.com/bitcoin/bitcoin/blob/master/src/wallet/coinselection.cpp#L538
-https://github.com/bitcoin/bitcoin/blob/master/src/wallet/coinselection.cpp#L651
+1. https://github.com/bitcoin/bitcoin/blob/master/src/wallet/coinselection.cpp#L190
+2. https://github.com/bitcoin/bitcoin/blob/master/src/wallet/coinselection.cpp#L325
+3. https://github.com/bitcoin/bitcoin/blob/master/src/wallet/coinselection.cpp#L538
+4. https://github.com/bitcoin/bitcoin/blob/master/src/wallet/coinselection.cpp#L651
