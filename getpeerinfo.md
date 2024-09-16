@@ -1,8 +1,8 @@
 {
     "id": 6,
-    "addr": "<remote-connection-address>",
-    "addrbind": "<local-connection-addresss>",
-    "addrlocal": "<local-connection-public-ip>",
+    **"addr": "<remote-connection-address>"**,
+    **"addrbind": "<local-connection-private-ip>"**,
+    **"addrlocal": "<local-connection-public-ip>"**,
     "network": "ipv4",
     "services": "0000000000000c09",
     "servicesnames": [
