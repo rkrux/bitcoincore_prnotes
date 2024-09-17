@@ -50,4 +50,4 @@ However, once the transaction is confirmed, the output shows as no for the said 
   }
 ```
 
-The `address` in this `send` transaction is the receiver though, which is confusing.
+The `address` in this `send` transaction is the receiver though, which is confusing. Related issue: https://github.com/bitcoin/bitcoin/issues/28797
