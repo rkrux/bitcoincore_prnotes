@@ -1,0 +1,520 @@
+➜  bitcoin git:(2024-08-getdescriptoractivity) ✗ time bitcoinclimain getdescriptoractivity \
+'["00000000000000000001dca75f6da4a2ed1c24547e85e5a89fe75701726fb268","000000000000000000020e9a2989dc69dfc8eec559788ce774d5abf824a2eb98"]' \
+'["addr(bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx)"]'
+{
+  "activity": [
+    {
+      "type": "spend",
+      "amount": 5.18842468,
+      "blockhash": "00000000000000000001dca75f6da4a2ed1c24547e85e5a89fe75701726fb268",
+      "height": 870930,
+      "spend_txid": "e0592974c6658da56711e18c0ddb27b112175a87e25e4b42a7dae277b8e39672",
+      "spend_vin": 0,
+      "prevout_txid": "fec68f8fd51257c0d9cd165d2a79bfc4f74a2bd65dcf14147e2e2192952acbfd",
+      "prevout_vout": 1,
+      "prevout_spk": {
+        "asm": "0 192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "desc": "addr(bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx)#rumqegaa",
+        "hex": "0014192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "address": "bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx",
+        "type": "witness_v0_keyhash"
+      }
+    },
+    {
+      "type": "receive",
+      "amount": 5.18521569,
+      "blockhash": "00000000000000000001dca75f6da4a2ed1c24547e85e5a89fe75701726fb268",
+      "height": 870930,
+      "txid": "e0592974c6658da56711e18c0ddb27b112175a87e25e4b42a7dae277b8e39672",
+      "vout": 0,
+      "output_spk": {
+        "asm": "0 192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "desc": "addr(bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx)#rumqegaa",
+        "hex": "0014192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "address": "bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx",
+        "type": "witness_v0_keyhash"
+      }
+    },
+    {
+      "type": "spend",
+      "amount": 2.95255519,
+      "blockhash": "00000000000000000001dca75f6da4a2ed1c24547e85e5a89fe75701726fb268",
+      "height": 870930,
+      "spend_txid": "7ea160cafdb041ee0e5f90049b658e9c7e2c4f96ebe99cf7ebe17d5e7c41457b",
+      "spend_vin": 0,
+      "prevout_txid": "b0474ffbb7bab7a5912436af6fa56bf4a8f329bc2ef44a8a76a3469115a07504",
+      "prevout_vout": 1,
+      "prevout_spk": {
+        "asm": "0 192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "desc": "addr(bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx)#rumqegaa",
+        "hex": "0014192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "address": "bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx",
+        "type": "witness_v0_keyhash"
+      }
+    },
+    {
+      "type": "receive",
+      "amount": 2.95218277,
+      "blockhash": "00000000000000000001dca75f6da4a2ed1c24547e85e5a89fe75701726fb268",
+      "height": 870930,
+      "txid": "7ea160cafdb041ee0e5f90049b658e9c7e2c4f96ebe99cf7ebe17d5e7c41457b",
+      "vout": 1,
+      "output_spk": {
+        "asm": "0 192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "desc": "addr(bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx)#rumqegaa",
+        "hex": "0014192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "address": "bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx",
+        "type": "witness_v0_keyhash"
+      }
+    },
+    {
+      "type": "spend",
+      "amount": 4.35547692,
+      "blockhash": "00000000000000000001dca75f6da4a2ed1c24547e85e5a89fe75701726fb268",
+      "height": 870930,
+      "spend_txid": "6660df30ad65924476822e8ba9e82618147ebbedf0373f603184c4cdea28b4af",
+      "spend_vin": 0,
+      "prevout_txid": "ab902a5fb21e39c9fa355a64749508d548ae72010f20e31a647a272da01b89c0",
+      "prevout_vout": 0,
+      "prevout_spk": {
+        "asm": "0 192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "desc": "addr(bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx)#rumqegaa",
+        "hex": "0014192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "address": "bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx",
+        "type": "witness_v0_keyhash"
+      }
+    },
+    {
+      "type": "receive",
+      "amount": 4.34856549,
+      "blockhash": "00000000000000000001dca75f6da4a2ed1c24547e85e5a89fe75701726fb268",
+      "height": 870930,
+      "txid": "6660df30ad65924476822e8ba9e82618147ebbedf0373f603184c4cdea28b4af",
+      "vout": 0,
+      "output_spk": {
+        "asm": "0 192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "desc": "addr(bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx)#rumqegaa",
+        "hex": "0014192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "address": "bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx",
+        "type": "witness_v0_keyhash"
+      }
+    },
+    {
+      "type": "spend",
+      "amount": 0.46176541,
+      "blockhash": "00000000000000000001dca75f6da4a2ed1c24547e85e5a89fe75701726fb268",
+      "height": 870930,
+      "spend_txid": "e421416ff3e70fbbdba31f56bcbec2655913618f483b6d520a80b464b9e423b6",
+      "spend_vin": 0,
+      "prevout_txid": "ff9c92efa52018197c44ca70a79d1b642ad67878b494dcb6b871d1f35c1b20ef",
+      "prevout_vout": 1,
+      "prevout_spk": {
+        "asm": "0 192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "desc": "addr(bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx)#rumqegaa",
+        "hex": "0014192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "address": "bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx",
+        "type": "witness_v0_keyhash"
+      }
+    },
+    {
+      "type": "receive",
+      "amount": 0.46133650,
+      "blockhash": "00000000000000000001dca75f6da4a2ed1c24547e85e5a89fe75701726fb268",
+      "height": 870930,
+      "txid": "e421416ff3e70fbbdba31f56bcbec2655913618f483b6d520a80b464b9e423b6",
+      "vout": 1,
+      "output_spk": {
+        "asm": "0 192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "desc": "addr(bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx)#rumqegaa",
+        "hex": "0014192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "address": "bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx",
+        "type": "witness_v0_keyhash"
+      }
+    },
+    {
+      "type": "spend",
+      "amount": 5.82862847,
+      "blockhash": "000000000000000000020e9a2989dc69dfc8eec559788ce774d5abf824a2eb98",
+      "height": 870931,
+      "spend_txid": "82e8baea75f352677573c66f91b1eb46b3efabf0f2e74cb31465de256b7ea328",
+      "spend_vin": 0,
+      "prevout_txid": "2ec60617edb67436b051a6a8184314dde42402fa2c923a0287498ae90b9ab293",
+      "prevout_vout": 1,
+      "prevout_spk": {
+        "asm": "0 192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "desc": "addr(bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx)#rumqegaa",
+        "hex": "0014192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "address": "bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx",
+        "type": "witness_v0_keyhash"
+      }
+    },
+    {
+      "type": "receive",
+      "amount": 5.32855656,
+      "blockhash": "000000000000000000020e9a2989dc69dfc8eec559788ce774d5abf824a2eb98",
+      "height": 870931,
+      "txid": "82e8baea75f352677573c66f91b1eb46b3efabf0f2e74cb31465de256b7ea328",
+      "vout": 1,
+      "output_spk": {
+        "asm": "0 192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "desc": "addr(bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx)#rumqegaa",
+        "hex": "0014192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "address": "bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx",
+        "type": "witness_v0_keyhash"
+      }
+    },
+    {
+      "type": "spend",
+      "amount": 2.95218277,
+      "blockhash": "000000000000000000020e9a2989dc69dfc8eec559788ce774d5abf824a2eb98",
+      "height": 870931,
+      "spend_txid": "03eeede2276144c6d7954d653a90aab99fb0e7a3e80b1c0aec3300eb0f03757a",
+      "spend_vin": 0,
+      "prevout_txid": "7ea160cafdb041ee0e5f90049b658e9c7e2c4f96ebe99cf7ebe17d5e7c41457b",
+      "prevout_vout": 1,
+      "prevout_spk": {
+        "asm": "0 192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "desc": "addr(bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx)#rumqegaa",
+        "hex": "0014192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "address": "bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx",
+        "type": "witness_v0_keyhash"
+      }
+    },
+    {
+      "type": "receive",
+      "amount": 2.95182035,
+      "blockhash": "000000000000000000020e9a2989dc69dfc8eec559788ce774d5abf824a2eb98",
+      "height": 870931,
+      "txid": "03eeede2276144c6d7954d653a90aab99fb0e7a3e80b1c0aec3300eb0f03757a",
+      "vout": 1,
+      "output_spk": {
+        "asm": "0 192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "desc": "addr(bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx)#rumqegaa",
+        "hex": "0014192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "address": "bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx",
+        "type": "witness_v0_keyhash"
+      }
+    },
+    {
+      "type": "spend",
+      "amount": 0.46133650,
+      "blockhash": "000000000000000000020e9a2989dc69dfc8eec559788ce774d5abf824a2eb98",
+      "height": 870931,
+      "spend_txid": "e9f7677d234877b98d67825d5f292ebc7edb8d9d1228714ddd8d39faa8ce3fa0",
+      "spend_vin": 0,
+      "prevout_txid": "e421416ff3e70fbbdba31f56bcbec2655913618f483b6d520a80b464b9e423b6",
+      "prevout_vout": 1,
+      "prevout_spk": {
+        "asm": "0 192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "desc": "addr(bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx)#rumqegaa",
+        "hex": "0014192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "address": "bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx",
+        "type": "witness_v0_keyhash"
+      }
+    },
+    {
+      "type": "receive",
+      "amount": 0.44718796,
+      "blockhash": "000000000000000000020e9a2989dc69dfc8eec559788ce774d5abf824a2eb98",
+      "height": 870931,
+      "txid": "e9f7677d234877b98d67825d5f292ebc7edb8d9d1228714ddd8d39faa8ce3fa0",
+      "vout": 0,
+      "output_spk": {
+        "asm": "0 192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "desc": "addr(bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx)#rumqegaa",
+        "hex": "0014192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "address": "bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx",
+        "type": "witness_v0_keyhash"
+      }
+    },
+    {
+      "type": "spend",
+      "amount": 5.95540830,
+      "blockhash": "000000000000000000020e9a2989dc69dfc8eec559788ce774d5abf824a2eb98",
+      "height": 870931,
+      "spend_txid": "7ca2cd56108b9b68e1d7e03bfc7bb206e2397c86dc03ff383c499767e404abb5",
+      "spend_vin": 0,
+      "prevout_txid": "caae53fca155f5c26cbeacccb81f42b18b6e6b3628820dc0681d7523cd399573",
+      "prevout_vout": 0,
+      "prevout_spk": {
+        "asm": "0 192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "desc": "addr(bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx)#rumqegaa",
+        "hex": "0014192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "address": "bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx",
+        "type": "witness_v0_keyhash"
+      }
+    },
+    {
+      "type": "receive",
+      "amount": 5.94831232,
+      "blockhash": "000000000000000000020e9a2989dc69dfc8eec559788ce774d5abf824a2eb98",
+      "height": 870931,
+      "txid": "7ca2cd56108b9b68e1d7e03bfc7bb206e2397c86dc03ff383c499767e404abb5",
+      "vout": 1,
+      "output_spk": {
+        "asm": "0 192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "desc": "addr(bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx)#rumqegaa",
+        "hex": "0014192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "address": "bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx",
+        "type": "witness_v0_keyhash"
+      }
+    },
+    {
+      "type": "spend",
+      "amount": 4.34856549,
+      "blockhash": "000000000000000000020e9a2989dc69dfc8eec559788ce774d5abf824a2eb98",
+      "height": 870931,
+      "spend_txid": "a3d436480122591938aaf71c1ddd0476c3a6bd9efca5a38ae6883a6a0bf0fbb6",
+      "spend_vin": 0,
+      "prevout_txid": "6660df30ad65924476822e8ba9e82618147ebbedf0373f603184c4cdea28b4af",
+      "prevout_vout": 0,
+      "prevout_spk": {
+        "asm": "0 192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "desc": "addr(bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx)#rumqegaa",
+        "hex": "0014192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "address": "bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx",
+        "type": "witness_v0_keyhash"
+      }
+    },
+    {
+      "type": "receive",
+      "amount": 4.34512583,
+      "blockhash": "000000000000000000020e9a2989dc69dfc8eec559788ce774d5abf824a2eb98",
+      "height": 870931,
+      "txid": "a3d436480122591938aaf71c1ddd0476c3a6bd9efca5a38ae6883a6a0bf0fbb6",
+      "vout": 0,
+      "output_spk": {
+        "asm": "0 192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "desc": "addr(bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx)#rumqegaa",
+        "hex": "0014192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "address": "bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx",
+        "type": "witness_v0_keyhash"
+      }
+    },
+    {
+      "type": "spend",
+      "amount": 5.18521569,
+      "blockhash": "000000000000000000020e9a2989dc69dfc8eec559788ce774d5abf824a2eb98",
+      "height": 870931,
+      "spend_txid": "b95c5b64ac563b14701f578c764fe7c651b8b099f1f599f3047b454903172abd",
+      "spend_vin": 0,
+      "prevout_txid": "e0592974c6658da56711e18c0ddb27b112175a87e25e4b42a7dae277b8e39672",
+      "prevout_vout": 0,
+      "prevout_spk": {
+        "asm": "0 192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "desc": "addr(bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx)#rumqegaa",
+        "hex": "0014192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "address": "bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx",
+        "type": "witness_v0_keyhash"
+      }
+    },
+    {
+      "type": "receive",
+      "amount": 5.00913704,
+      "blockhash": "000000000000000000020e9a2989dc69dfc8eec559788ce774d5abf824a2eb98",
+      "height": 870931,
+      "txid": "b95c5b64ac563b14701f578c764fe7c651b8b099f1f599f3047b454903172abd",
+      "vout": 0,
+      "output_spk": {
+        "asm": "0 192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "desc": "addr(bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx)#rumqegaa",
+        "hex": "0014192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "address": "bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx",
+        "type": "witness_v0_keyhash"
+      }
+    },
+    {
+      "type": "spend",
+      "amount": 6.29159799,
+      "blockhash": "",
+      "height": -1,
+      "spend_txid": "3f93e16493161ae6f470454b7fd58e279ee9118d8dea8baeb61f7935e029a9de",
+      "spend_vin": 0,
+      "prevout_txid": "5273ec590d3ffa68a33ee0846a6a4885ce6b121211f4cd8bb671ffb23e5b3718",
+      "prevout_vout": 1,
+      "prevout_spk": {
+        "asm": "0 192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "desc": "addr(bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx)#rumqegaa",
+        "hex": "0014192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "address": "bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx",
+        "type": "witness_v0_keyhash"
+      }
+    },
+    {
+      "type": "receive",
+      "amount": 6.29101484,
+      "blockhash": "",
+      "height": -1,
+      "txid": "3f93e16493161ae6f470454b7fd58e279ee9118d8dea8baeb61f7935e029a9de",
+      "vout": 1,
+      "output_spk": {
+        "asm": "0 192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "desc": "addr(bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx)#rumqegaa",
+        "hex": "0014192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "address": "bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx",
+        "type": "witness_v0_keyhash"
+      }
+    },
+    {
+      "type": "spend",
+      "amount": 39.30281173,
+      "blockhash": "",
+      "height": -1,
+      "spend_txid": "6f2567f29e5cc4b749693dd96649ea6ccfabb632fd2386de399461d45434058e",
+      "spend_vin": 0,
+      "prevout_txid": "ee87ad741d7f68156e46befc320b2b6dc4cb1ee1da4bca2dcba96d943f1421b9",
+      "prevout_vout": 1,
+      "prevout_spk": {
+        "asm": "0 192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "desc": "addr(bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx)#rumqegaa",
+        "hex": "0014192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "address": "bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx",
+        "type": "witness_v0_keyhash"
+      }
+    },
+    {
+      "type": "receive",
+      "amount": 39.30239836,
+      "blockhash": "",
+      "height": -1,
+      "txid": "6f2567f29e5cc4b749693dd96649ea6ccfabb632fd2386de399461d45434058e",
+      "vout": 1,
+      "output_spk": {
+        "asm": "0 192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "desc": "addr(bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx)#rumqegaa",
+        "hex": "0014192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "address": "bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx",
+        "type": "witness_v0_keyhash"
+      }
+    },
+    {
+      "type": "spend",
+      "amount": 4.24904187,
+      "blockhash": "",
+      "height": -1,
+      "spend_txid": "fad9cfe8889513921691cd156598195f8f253c202e4ab59f16d9a778ae46f78b",
+      "spend_vin": 0,
+      "prevout_txid": "8d5ccb5f4ea236196cbd4bce205ea59c82d02c1c7b00a25871f70b7b8c1a4e54",
+      "prevout_vout": 0,
+      "prevout_spk": {
+        "asm": "0 192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "desc": "addr(bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx)#rumqegaa",
+        "hex": "0014192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "address": "bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx",
+        "type": "witness_v0_keyhash"
+      }
+    },
+    {
+      "type": "receive",
+      "amount": 3.68241985,
+      "blockhash": "",
+      "height": -1,
+      "txid": "fad9cfe8889513921691cd156598195f8f253c202e4ab59f16d9a778ae46f78b",
+      "vout": 1,
+      "output_spk": {
+        "asm": "0 192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "desc": "addr(bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx)#rumqegaa",
+        "hex": "0014192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "address": "bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx",
+        "type": "witness_v0_keyhash"
+      }
+    },
+    {
+      "type": "spend",
+      "amount": 5.94883705,
+      "blockhash": "",
+      "height": -1,
+      "spend_txid": "8533c05ccf808e67e8ea4ee1666ded6997955896a4e1ed9440135a03bd261a76",
+      "spend_vin": 0,
+      "prevout_txid": "6a701e048640199e66109df37748b2c4ebd7a2d3597f85050e644e8d9102f5cb",
+      "prevout_vout": 1,
+      "prevout_spk": {
+        "asm": "0 192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "desc": "addr(bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx)#rumqegaa",
+        "hex": "0014192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "address": "bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx",
+        "type": "witness_v0_keyhash"
+      }
+    },
+    {
+      "type": "receive",
+      "amount": 5.88090780,
+      "blockhash": "",
+      "height": -1,
+      "txid": "8533c05ccf808e67e8ea4ee1666ded6997955896a4e1ed9440135a03bd261a76",
+      "vout": 0,
+      "output_spk": {
+        "asm": "0 192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "desc": "addr(bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx)#rumqegaa",
+        "hex": "0014192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "address": "bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx",
+        "type": "witness_v0_keyhash"
+      }
+    },
+    {
+      "type": "spend",
+      "amount": 0.00920601,
+      "blockhash": "",
+      "height": -1,
+      "spend_txid": "05d2b1cae7c793ab61f1410f8c81f3a6182359d110d30ef8e9450a96e97df168",
+      "spend_vin": 0,
+      "prevout_txid": "91ff0b6b4f928a3f4e2a7702fdd07709be74e65d8b496b8e379ce009e8a0ffe1",
+      "prevout_vout": 0,
+      "prevout_spk": {
+        "asm": "0 192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "desc": "addr(bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx)#rumqegaa",
+        "hex": "0014192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "address": "bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx",
+        "type": "witness_v0_keyhash"
+      }
+    },
+    {
+      "type": "receive",
+      "amount": 0.00860887,
+      "blockhash": "",
+      "height": -1,
+      "txid": "05d2b1cae7c793ab61f1410f8c81f3a6182359d110d30ef8e9450a96e97df168",
+      "vout": 1,
+      "output_spk": {
+        "asm": "0 192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "desc": "addr(bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx)#rumqegaa",
+        "hex": "0014192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "address": "bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx",
+        "type": "witness_v0_keyhash"
+      }
+    },
+    {
+      "type": "spend",
+      "amount": 9.09331051,
+      "blockhash": "",
+      "height": -1,
+      "spend_txid": "75f1c4019071387606ec9fc4b17d203b662b6249f9e684dacd4b685f1bf3bb0e",
+      "spend_vin": 0,
+      "prevout_txid": "6f7327aafeb857bd9902664cd8deb870cd31c22f655e2caf5ff64ef187c00202",
+      "prevout_vout": 0,
+      "prevout_spk": {
+        "asm": "0 192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "desc": "addr(bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx)#rumqegaa",
+        "hex": "0014192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "address": "bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx",
+        "type": "witness_v0_keyhash"
+      }
+    },
+    {
+      "type": "receive",
+      "amount": 9.08551086,
+      "blockhash": "",
+      "height": -1,
+      "txid": "75f1c4019071387606ec9fc4b17d203b662b6249f9e684dacd4b685f1bf3bb0e",
+      "vout": 0,
+      "output_spk": {
+        "asm": "0 192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "desc": "addr(bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx)#rumqegaa",
+        "hex": "0014192e80ed2c7c412bdc2a6c8f371d15cb90f3c85b",
+        "address": "bc1qryhgpmfv03qjhhp2dj8nw8g4ewg08jzmgy3cyx",
+        "type": "witness_v0_keyhash"
+      }
+    }
+  ]
+}
+/Users/rkrux/projects/bitcoin/build/src/bitcoin-cli  getdescriptoractivity    0.01s user 0.01s system 2% cpu 0.505 total
