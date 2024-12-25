@@ -29,3 +29,14 @@ in the locking code.
 when they spend those outputs in future transactions. That's why it's common to 
 see the unlocking code to have all the spending data - multiple signatures, full
 `witnessScript` or `redeemScript`, control block (in case of Taproot).
+
+- Common limits/numbers:
+ * 10,000 bytes for the witness script.
+ * 100 stack items before the witness script in witness. 
+ * 520 bytes limit each stack item.
+ * 520 bytes limit for the redeemScript (much smaller than the witnessScript).
+ * With the 520 byte limit, maximum 15 pubkeys can be used in the multi-sig 
+   script nested inside the P2SH.
+ * 
+
+
