@@ -56,13 +56,12 @@ see the unlocking code to have all the spending data - multiple signatures, full
 
 ### Common Opcodes
  * `OP_1` to `OP_16` is expressed with `81` to `96` opcodes, `0x51` to `0x60`.
+
  Name | Decimal | Hex
  ---- | ------- | ---
  OP_1 | 81 | 51
  OP_2 | 82 | 52
  OP_3 | 83 | 53
-
-
   
 
 ## Common limits/numbers:
