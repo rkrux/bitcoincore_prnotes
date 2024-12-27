@@ -55,14 +55,22 @@ see the unlocking code to have all the spending data - multiple signatures, full
  They were more expensive to spend due to leading to larger transaction size.
 
 ### Common Opcodes
- * `OP_1` to `OP_16` is expressed with `81` to `96` opcodes, `0x51` to `0x60`.
 
  Name | Decimal | Hex
  ---- | ------- | ---
  OP_1 | 81 | 51
  OP_2 | 82 | 52
  OP_3 | 83 | 53
-  
+ .. | .. | ..
+ OP_16 | 96 | 60
+ OP_VERIFY | 105 | 69
+ OP_RETURN | 106 | 6a
+ OP_EQUAL | 135 | 87
+ OP_RIPEMD160 | 166 | a6
+ OP_SHA256 | 168 | a8
+ OP_HASH160 | 169 | a9
+ OP_CHECKSIG | 172 | ac
+ OP_CHECKMULTISIG | 174 | ae
 
 ## Common limits/numbers:
  * 10,000 bytes for the witness script.
