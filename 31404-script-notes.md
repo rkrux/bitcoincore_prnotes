@@ -32,7 +32,7 @@ see the unlocking code to have all the spending data - multiple signatures, full
 
 ## Segwit
  * `OP_0` at the start of the "locking script"/`scriptPubKey` signifies 
- `Segwit` script.
+ `Segwit` script, which leads to custom handling in the script execution code.
  * P2WPKH: <OP_0> <OP_PUSHBYTES_20> <PUBKEY_HASH>
  	* Hex: <00><14><20bytes(40chars)-pubkeyhash>
  * P2WSH: <OP_0> <OP_PUSHBYTES_32> <SCRIPT_HASH>
@@ -46,7 +46,8 @@ see the unlocking code to have all the spending data - multiple signatures, full
  * 520 bytes limit each stack item.
  * 520 bytes limit for the redeemScript (much smaller than the witnessScript).
  * With the 520 byte limit, maximum 15 pubkeys can be used in the multi-sig 
-   script nested inside the P2SH.
+   script nested inside the P2SH. More than 15 keys in the script is consensus
+ invalid.
 
 ## Taproot
  * It is essentially a superset of P2WKH and P2WSH as in both the spending paths
@@ -70,7 +71,7 @@ see the unlocking code to have all the spending data - multiple signatures, full
  * Since tweaking is required while "unlocking" the output, the script tree 
  needs to be stored and retrieved while spending from the `keypath` as well.
  * Only 1 item - a signature - is present in the `witness` field.
- * {key-signature}
+ * <KEY_SIGNATURE>
 
 ### ScriptPath Spending
  * In the `scriptpath`, there can be bunch of scripts from which any one can be 
