@@ -88,7 +88,7 @@ see the unlocking code to have all the spending data - multiple signatures, full
  * Since tweaking is required while "unlocking" the output, the script tree 
  needs to be stored and retrieved while spending from the `keypath` as well.
  * Only 1 item - a signature - is present in the `witness` field.
- * <KEY_SIGNATURE>
+ * Witness: <KEY_SIGNATURE>
 
 ### ScriptPath Spending
  * In the `scriptpath`, there can be bunch of scripts from which any one can be 
@@ -101,4 +101,5 @@ see the unlocking code to have all the spending data - multiple signatures, full
  in the script tree.
  * Note: The pubkey from the `keypath` is still required while spending from the
  `scriptpath`.
- * {spending-script-sigs}{spending-script}{control-block:pubkey-and-merklepath} 
+ * Witness: <SPENDING_SCRIPT_SIGS><SPENDING_SCRIPT><CONTROL_BLOCK:PUBKEY_AND_MERKLEPATH>
+
