@@ -34,9 +34,9 @@ see the unlocking code to have all the spending data - multiple signatures, full
  * `OP_0` at the start of the "locking script"/`scriptPubKey` signifies 
  `Segwit` script.
  * P2WPKH: <OP_0> <OP_PUSHBYTES_20> <PUBKEY_HASH>
-  * Hex: <00><14><20bytes(40chars)-pubkeyhash>
+ 	* Hex: <00><14><20bytes(40chars)-pubkeyhash>
  * P2WSH: <OP_0> <OP_PUSHBYTES_32> <SCRIPT_HASH>
-  * Hex: <00><20><32bytes(64chars)-scripthash>
+ 	* Hex: <00><20><32bytes(64chars)-scripthash>
 
 ## Common script patterns
 
