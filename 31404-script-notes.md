@@ -30,6 +30,16 @@ when they spend those outputs in future transactions. That's why it's common to
 see the unlocking code to have all the spending data - multiple signatures, full
 `witnessScript` or `redeemScript`, control block (in case of Taproot).
 
+## Segwit
+ * `OP_0` at the start of the "locking script"/`scriptPubKey` signifies 
+ `Segwit` script.
+ * P2WPKH: <OP_0> <OP_PUSHBYTES_20> <PUBKEY_HASH>
+  * Hex: <00><14><20bytes(40chars)-pubkeyhash>
+ * P2WSH: <OP_0> <OP_PUSHBYTES_32> <SCRIPT_HASH>
+  * Hex: <00><20><32bytes(64chars)-scripthash>
+
+## Common script patterns
+
 ## Common limits/numbers:
  * 10,000 bytes for the witness script.
  * 100 stack items before the witness script in witness. 
@@ -46,17 +56,22 @@ see the unlocking code to have all the spending data - multiple signatures, full
  used in the `scriptpath`.
  * `Tweaking` is the modulo addition of the pubkey from the `keypath` to the 
  script commitment hash from the `scriptpath`.
- * <OP_1> <OP_PUSHBYTES_32> <TweakedPublicKey>
+ * TweakedPublicKey ~ (KeyPathPublicKey + ScriptsTreeMerkleRoot) % N
+ * `scriptPubKey`: <OP_1> <OP_PUSHBYTES_32> <TweakedPublicKey>
+ * `OP_1` at the start signifies Taproot that requires custom handling, no need
+ to manually add the script elements on the stack like done in P2PKH, P2SH.
+
 ### KeyPath Spending
  * While spending from the `keypath`, a signature from a key is required. 
  Multiple keys can be used/aggregated to form the final single key this is 
  possible due to Schnorr Signatures and PubKey Aggregation. It is tweaked by the
  script commitment hash and then the signature from the final tweaked key goes 
  in the witness.
- * Since tweaking is required while "unlocking" the output, the script tree need
- to be stored and retrieved while spending from the `keypath` as well.
+ * Since tweaking is required while "unlocking" the output, the script tree 
+ needs to be stored and retrieved while spending from the `keypath` as well.
  * Only 1 item - a signature - is present in the `witness` field.
  * <key-signature>
+
 ### ScriptPath Spending
  * In the `scriptpath`, there can be bunch of scripts from which any one can be 
  used to spend. The other scripts need not be revealed, thereby increasing 
@@ -68,4 +83,4 @@ see the unlocking code to have all the spending data - multiple signatures, full
  in the script tree.
  * Note: The pubkey from the `keypath` is still required while spending from the
  `scriptpath`.
- * <spending-script-sigs><spending-script><control-block:pubkey-merklepath> 
+ * <spending-script-sigs><spending-script><control-block:pubkey-and-merklepath> 
