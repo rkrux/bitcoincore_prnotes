@@ -52,9 +52,18 @@ see the unlocking code to have all the spending data - multiple signatures, full
  denoting the y-coordinate parity.
 	* In legacy scripts, uncompressed public keys were also used that were
  65 bytes in length expressed by both the X and Y coordinates (& 04 prefix). 
- They were more expensive to spend due to leading to larger transaction size. 
+ They were more expensive to spend due to leading to larger transaction size.
+
+### Common Opcodes
  * `OP_1` to `OP_16` is expressed with `81` to `96` opcodes, `0x51` to `0x60`.
- *
+ Name | Decimal | Hex
+ ---- | ------- | ---
+ OP_1 | 81 | 51
+ OP_2 | 82 | 52
+ OP_3 | 83 | 53
+
+
+  
 
 ## Common limits/numbers:
  * 10,000 bytes for the witness script.
