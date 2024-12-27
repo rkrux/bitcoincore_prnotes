@@ -57,7 +57,7 @@ see the unlocking code to have all the spending data - multiple signatures, full
  * `Tweaking` is the modulo addition of the pubkey from the `keypath` to the 
  script commitment hash from the `scriptpath`.
  * TweakedPublicKey ~ (KeyPathPublicKey + ScriptsTreeMerkleRoot) % N
- * `scriptPubKey`: <OP_1> <OP_PUSHBYTES_32> <TweakedPublicKey>
+ * `scriptPubKey`: <OP_1> <OP_PUSHBYTES_32> <TWEAKED_PUBLIC_KEY>
  * `OP_1` at the start signifies Taproot that requires custom handling, no need
  to manually add the script elements on the stack like done in P2PKH, P2SH.
 
@@ -70,7 +70,7 @@ see the unlocking code to have all the spending data - multiple signatures, full
  * Since tweaking is required while "unlocking" the output, the script tree 
  needs to be stored and retrieved while spending from the `keypath` as well.
  * Only 1 item - a signature - is present in the `witness` field.
- * <key-signature>
+ * {key-signature}
 
 ### ScriptPath Spending
  * In the `scriptpath`, there can be bunch of scripts from which any one can be 
@@ -83,4 +83,4 @@ see the unlocking code to have all the spending data - multiple signatures, full
  in the script tree.
  * Note: The pubkey from the `keypath` is still required while spending from the
  `scriptpath`.
- * <spending-script-sigs><spending-script><control-block:pubkey-and-merklepath> 
+ * {spending-script-sigs}{spending-script}{control-block:pubkey-and-merklepath} 
