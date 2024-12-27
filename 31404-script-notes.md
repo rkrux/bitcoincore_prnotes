@@ -35,10 +35,26 @@ see the unlocking code to have all the spending data - multiple signatures, full
  `Segwit` script, which leads to custom handling in the script execution code.
  * P2WPKH: <OP_0> <OP_PUSHBYTES_20> <PUBKEY_HASH>
  	* Hex: <00><14><20bytes(40chars)-pubkeyhash>
+	* The `scriptPubKey` length is 22 bytes / 44 chars.
  * P2WSH: <OP_0> <OP_PUSHBYTES_32> <SCRIPT_HASH>
  	* Hex: <00><20><32bytes(64chars)-scripthash>
+	* The `scriptPubKey` length is 34 bytes / 68 chars.
+ * The addresses start from `bc1q` and the length can be 42 or 62 chars. 
 
 ## Common script patterns
+ * Upto 75 bytes can be pushed onto the stack starting from 1. Hex values: 01-4b
+ 	* In ASM, they are denoted by OP_PUSHBYTES_XX.
+ * Usually, compressed pubkeys are expressed in 33 bytes: 1 byte (02 or 03) that
+ denotes whether the y-coordinate is even or odd. That's why it's common to notice
+ `OP_PUSHBYTES_33` in the "locking code".
+ 	* However, in Taproot, 32 bytes pubkeys are used because only the points
+ with even coordinates are used, so there is no need to have an extra byte 
+ denoting the y-coordinate parity.
+	* In legacy scripts, uncompressed public keys were also used that were
+ 65 bytes in length expressed by both the X and Y coordinates (& 04 prefix). 
+ They were more expensive to spend due to leading to larger transaction size. 
+ * `OP_1` to `OP_16` is expressed with `81` to `96` opcodes, `0x51` to `0x60`.
+ *
 
 ## Common limits/numbers:
  * 10,000 bytes for the witness script.
@@ -61,6 +77,7 @@ see the unlocking code to have all the spending data - multiple signatures, full
  * `scriptPubKey`: <OP_1> <OP_PUSHBYTES_32> <TWEAKED_PUBLIC_KEY>
  * `OP_1` at the start signifies Taproot that requires custom handling, no need
  to manually add the script elements on the stack like done in P2PKH, P2SH.
+ * The addresses start from `bc1p` and are 62 chars in length.
 
 ### KeyPath Spending
  * While spending from the `keypath`, a signature from a key is required. 
