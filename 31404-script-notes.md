@@ -32,13 +32,45 @@ see the unlocking code to have all the spending data - multiple signatures, full
 
 ## Segwit
  * `OP_0` at the start of the "locking script"/`scriptPubKey` signifies 
- `Segwit` script.
+ `Segwit` script, which leads to custom handling in the script execution code.
  * P2WPKH: <OP_0> <OP_PUSHBYTES_20> <PUBKEY_HASH>
-  * Hex: <00><14><20bytes(40chars)-pubkeyhash>
+ 	* Hex: <00><14><20bytes(40chars)-pubkeyhash>
+	* The `scriptPubKey` length is 22 bytes / 44 chars.
  * P2WSH: <OP_0> <OP_PUSHBYTES_32> <SCRIPT_HASH>
-  * Hex: <00><20><32bytes(64chars)-scripthash>
+ 	* Hex: <00><20><32bytes(64chars)-scripthash>
+	* The `scriptPubKey` length is 34 bytes / 68 chars.
+ * The addresses start from `bc1q` and the length can be 42 or 62 chars. 
 
 ## Common script patterns
+ * Upto 75 bytes can be pushed onto the stack starting from 1. Hex values: 01-4b
+ 	* In ASM, they are denoted by OP_PUSHBYTES_XX.
+ * Usually, compressed pubkeys are expressed in 33 bytes: 1 byte (02 or 03) that
+ denotes whether the y-coordinate is even or odd. That's why it's common to notice
+ `OP_PUSHBYTES_33` in the "locking code".
+ 	* However, in Taproot, 32 bytes pubkeys are used because only the points
+ with even coordinates are used, so there is no need to have an extra byte 
+ denoting the y-coordinate parity.
+	* In legacy scripts, uncompressed public keys were also used that were
+ 65 bytes in length expressed by both the X and Y coordinates (& 04 prefix). 
+ They were more expensive to spend due to leading to larger transaction size.
+
+### Common Opcodes
+
+ Name | Decimal | Hex
+ ---- | ------- | ---
+ OP_1 | 81 | 51
+ OP_2 | 82 | 52
+ OP_3 | 83 | 53
+ .. | .. | ..
+ OP_16 | 96 | 60
+ OP_VERIFY | 105 | 69
+ OP_RETURN | 106 | 6a
+ OP_EQUAL | 135 | 87
+ OP_RIPEMD160 | 166 | a6
+ OP_SHA256 | 168 | a8
+ OP_HASH160 | 169 | a9
+ OP_CHECKSIG | 172 | ac
+ OP_CHECKMULTISIG | 174 | ae
 
 ## Common limits/numbers:
  * 10,000 bytes for the witness script.
@@ -46,7 +78,8 @@ see the unlocking code to have all the spending data - multiple signatures, full
  * 520 bytes limit each stack item.
  * 520 bytes limit for the redeemScript (much smaller than the witnessScript).
  * With the 520 byte limit, maximum 15 pubkeys can be used in the multi-sig 
-   script nested inside the P2SH.
+   script nested inside the P2SH. More than 15 keys in the script is consensus
+ invalid.
 
 ## Taproot
  * It is essentially a superset of P2WKH and P2WSH as in both the spending paths
@@ -57,9 +90,10 @@ see the unlocking code to have all the spending data - multiple signatures, full
  * `Tweaking` is the modulo addition of the pubkey from the `keypath` to the 
  script commitment hash from the `scriptpath`.
  * TweakedPublicKey ~ (KeyPathPublicKey + ScriptsTreeMerkleRoot) % N
- * `scriptPubKey`: <OP_1> <OP_PUSHBYTES_32> <TweakedPublicKey>
+ * `scriptPubKey`: <OP_1> <OP_PUSHBYTES_32> <TWEAKED_PUBLIC_KEY>
  * `OP_1` at the start signifies Taproot that requires custom handling, no need
  to manually add the script elements on the stack like done in P2PKH, P2SH.
+ * The addresses start from `bc1p` and are 62 chars in length.
 
 ### KeyPath Spending
  * While spending from the `keypath`, a signature from a key is required. 
@@ -70,7 +104,7 @@ see the unlocking code to have all the spending data - multiple signatures, full
  * Since tweaking is required while "unlocking" the output, the script tree 
  needs to be stored and retrieved while spending from the `keypath` as well.
  * Only 1 item - a signature - is present in the `witness` field.
- * <key-signature>
+ * Witness: <KEY_SIGNATURE>
 
 ### ScriptPath Spending
  * In the `scriptpath`, there can be bunch of scripts from which any one can be 
@@ -83,4 +117,5 @@ see the unlocking code to have all the spending data - multiple signatures, full
  in the script tree.
  * Note: The pubkey from the `keypath` is still required while spending from the
  `scriptpath`.
- * <spending-script-sigs><spending-script><control-block:pubkey-and-merklepath> 
+ * Witness: <SPENDING_SCRIPT_SIGS><SPENDING_SCRIPT><CONTROL_BLOCK:PUBKEY_AND_MERKLEPATH>
+
