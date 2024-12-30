@@ -103,11 +103,22 @@ there'd be a `14` hex value succeeding it - `a914`. Common scripts using it are
  ------ | ------------- | ---------------
  P2PK | 1 pubkey | 1 sig by privkey
  P2PKH | 1 pubkey hash | 1 sig by privkey, 1 pubkey   
+ P2MS | 1 script | N script-inputs
  P2SH | 1 script hash | N script-inputs, 1 script hex  
  P2WPKH | 1 pubkey hash | 1 sig by privkey, 1 pubkey but in witness
  P2WSH | 1 script hash | N script-inputs, 1 script hex but in witness
  P2TR - KeyPath | 1 tweaked pubkey | 1 sig by the `tweaked` privkey
  P2TR - ScriptPath | 1 tweaked pubkey | N script-inputs, 1 script hex, control-block:1 base pubkey, merkle-path
+
+ Script | Common Locking ASM | Common Locking Hex
+ ------ | ------------------ | ------------------
+ P2PK | OP_PUSHBYTES_33 33_BYTES_PUBKEY OP_CHECKSIG | 
+ P2PKH | OP_DUP OP_HASH160 OP_PUSHBYTES_20 20_BYTES_PUBKEYHASH OP_EQUALVERIFY OP_CHECKSIG
+ P2MS | OP_1 OP_PUSHBYTES_33 33_BYTES_PUBKEY1 OP_PUSHBYTES_33 33_BYTES_PUBKEY2 OP_2 OP_CHECKMULTISIG
+ P2SH | OP_HASH160 OP_PUSHBYTES_20 20_BYTES_SCRIPTHASH OP_EQUAL
+ P2WPKH
+ P2PWSH
+ P2TR
 
 ## Common limits/numbers:
  * 10,000 bytes for the witness script.
