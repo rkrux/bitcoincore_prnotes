@@ -70,8 +70,6 @@ there'd be a `14` hex value succeeding it - `a914`. Common scripts using it are
  P2WSH | SHA256
  P2TR | None
 
-### Common Opcodes
-
  Name | Decimal | Hex
  ---- | ------- | ---
  OP_0 | 00 | 00
@@ -91,6 +89,7 @@ there'd be a `14` hex value succeeding it - `a914`. Common scripts using it are
  OP_DUP | 118 | 76
  .. | .. | ..
  OP_EQUAL | 135 | 87
+ OP_EQUALVERIFY | 136 | 88
  .. | .. | ..
  OP_RIPEMD160 | 166 | a6
  OP_SHA256 | 168 | a8
@@ -99,6 +98,27 @@ there'd be a `14` hex value succeeding it - `a914`. Common scripts using it are
  .. | .. | ..
  OP_CHECKSIG | 172 | ac
  OP_CHECKMULTISIG | 174 | ae
+
+ Script | Locking Model | Unlocking Model | Notes 
+ ------ | ------------- | --------------- | -----
+ P2PK | 1 pubkey | 1 sig by privkey | Just the sig is need that will be verified
+ P2PKH | 1 pubkey hash | 1 sig by privkey, 1 pubkey | Along with sig, pubkey is required because it's needed to verify the sig of the privkey    
+ P2MS | 1 script | N script-inputs | Only the required private key sigs are required for the multi-sig operator
+ P2SH | 1 script hash | N script-inputs, 1 script hex | Original script hex (redeemScript) is required to verify the sigs because non-spending nodes don't have the script, OP_DUP is not needed because it's treated as a special case and the `redeemScript` is duplicated during stack execution 
+ P2WPKH | 1 pubkey hash | 1 sig by privkey, 1 pubkey but in `witness` | Same as P2PKH but in `witness`
+ P2WSH | 1 script hash | N script-inputs, 1 script hex but in `witness` | Same as P2SH but in `witness`
+ P2TR - KeyPath | 1 tweaked pubkey | 1 sig by the `tweaked` privkey | Only the sig from the tweaked private key is enough, proves that the spender has both the base private key and the MerkleHash of the scripts tree. Since the locking script indeed contains the pubkey (and not the hash), it's not required to add it again in the `witness`
+ P2TR - ScriptPath | 1 tweaked pubkey | N script-inputs, 1 script hex, control-block:1 base pubkey, merkle-path | Script inputs (data) and the spending script hex are used to indeed execute the spending script. The control block is used to prove that the spending script is part of the script tree. Adding the merke-path insead of only a signature by the tweaked public key because it's more thorough and completely proves where the spending script lies in the script tree. 
+
+ Script | Common Locking ASM | Common Locking Hex
+ ------ | ------------------ | ------------------
+ P2PK | OP_PUSHBYTES_33 33_BYTES_PUBKEY OP_CHECKSIG | 21<66-chars>ac
+ P2PKH | OP_DUP OP_HASH160 OP_PUSHBYTES_20 20_BYTES_PUBKEYHASH OP_EQUALVERIFY OP_CHECKSIG | 76a914<40-chars>88ac
+ P2MS | OP_1 OP_PUSHBYTES_33 33_BYTES_PUBKEY1 OP_PUSHBYTES_33 33_BYTES_PUBKEY2 OP_2 OP_CHECKMULTISIG | 5121<66-chars>21<66-chars>52ae
+ P2SH | OP_HASH160 OP_PUSHBYTES_20 20_BYTES_SCRIPTHASH OP_EQUAL | a914<40-chars>87
+ P2WPKH | OP_0 OP_PUSHBYTES_20 20_BYTES_PUBKEYHASH | 0014<40-chars>
+ P2WSH | OP_0 OP_PUSHBYTES_32 32_BYTES_SCRIPTHASH | 0020<64-chars>
+ P2TR | OP_1 OP_PUSHBYTES_32 32_BYTES_TWEAKED_PUBKEY | 0120<64-chars>
 
 ## Common limits/numbers:
  * 10,000 bytes for the witness script.
