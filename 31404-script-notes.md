@@ -101,7 +101,13 @@ there'd be a `14` hex value succeeding it - `a914`. Common scripts using it are
 
  Script | Locking Model | Unlocking Model | Common Hex
  ------ | ------------- | --------------- | ----------
- P2PK | Single Public key | Single signature by the corresponding private key
+ P2PK | 1 pubkey | 1 sig by privkey |
+ P2PKH | 1 pubkey hash | 1 sig by privkey, 1 pubkey |   
+ P2SH | 1 script hash | N script-inputs, 1 script hex |  
+ P2WPKH | 1 pubkey hash | 1 sig by privkey, 1 pubkey but in witness |
+ P2WSH | 1 script hash | N script-inputs, 1 script hex but in witness |
+ P2TR - KeyPath | 1 tweaked pubkey | 1 sig by the `tweaked` privkey |
+ P2TR - ScriptPath | 1 tweaked pubkey | N script-inputs, 1 script hex, control-block:1 base pubkey, merkle-path |  
 
 ## Common limits/numbers:
  * 10,000 bytes for the witness script.
