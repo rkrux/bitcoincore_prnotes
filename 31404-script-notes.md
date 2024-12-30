@@ -99,16 +99,16 @@ there'd be a `14` hex value succeeding it - `a914`. Common scripts using it are
  OP_CHECKSIG | 172 | ac
  OP_CHECKMULTISIG | 174 | ae
 
- Script | Locking Model | Unlocking Model 
- ------ | ------------- | ---------------
- P2PK | 1 pubkey | 1 sig by privkey
- P2PKH | 1 pubkey hash | 1 sig by privkey, 1 pubkey   
- P2MS | 1 script | N script-inputs
- P2SH | 1 script hash | N script-inputs, 1 script hex  
- P2WPKH | 1 pubkey hash | 1 sig by privkey, 1 pubkey but in witness
- P2WSH | 1 script hash | N script-inputs, 1 script hex but in witness
- P2TR - KeyPath | 1 tweaked pubkey | 1 sig by the `tweaked` privkey
- P2TR - ScriptPath | 1 tweaked pubkey | N script-inputs, 1 script hex, control-block:1 base pubkey, merkle-path
+ Script | Locking Model | Unlocking Model | Notes 
+ ------ | ------------- | --------------- | -----
+ P2PK | 1 pubkey | 1 sig by privkey | Just the sig is need that will be verified
+ P2PKH | 1 pubkey hash | 1 sig by privkey, 1 pubkey | Along with sig, pubkey is required because it's needed to verify the sig of the privkey    
+ P2MS | 1 script | N script-inputs | Only the required private key sigs are required for the multi-sig operator
+ P2SH | 1 script hash | N script-inputs, 1 script hex | Original script hex (redeemScript) is required to verify the sigs because non-spending nodes don't have the script 
+ P2WPKH | 1 pubkey hash | 1 sig by privkey, 1 pubkey but in `witness` | Same as P2PKH but in `witness`
+ P2WSH | 1 script hash | N script-inputs, 1 script hex but in `witness` | Same as P2SH but in `witness`
+ P2TR - KeyPath | 1 tweaked pubkey | 1 sig by the `tweaked` privkey | Only the sig from the tweaked private key is enough, proves that the spender has both the base private key and the MerkleHash of the scripts tree. Since the locking script indeed contains the pubkey (and not the hash), it's not required to add it again in the `witness`
+ P2TR - ScriptPath | 1 tweaked pubkey | N script-inputs, 1 script hex, control-block:1 base pubkey, merkle-path | Script inputs (data) and the spending script hex are used to indeed execute the spending script. The control block is used to prove that the spending script is part of the script tree. Adding the merke-path insead of only a signature by the tweaked public key because it's more thorough and completely proves where the spending script lies in the script tree. 
 
  Script | Common Locking ASM | Common Locking Hex
  ------ | ------------------ | ------------------
