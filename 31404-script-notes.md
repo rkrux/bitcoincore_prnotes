@@ -70,8 +70,6 @@ there'd be a `14` hex value succeeding it - `a914`. Common scripts using it are
  P2WSH | SHA256
  P2TR | None
 
-### Common Opcodes
-
  Name | Decimal | Hex
  ---- | ------- | ---
  OP_0 | 00 | 00
@@ -91,6 +89,7 @@ there'd be a `14` hex value succeeding it - `a914`. Common scripts using it are
  OP_DUP | 118 | 76
  .. | .. | ..
  OP_EQUAL | 135 | 87
+ OP_EQUALVERIFY | 136 | 88
  .. | .. | ..
  OP_RIPEMD160 | 166 | a6
  OP_SHA256 | 168 | a8
@@ -99,6 +98,10 @@ there'd be a `14` hex value succeeding it - `a914`. Common scripts using it are
  .. | .. | ..
  OP_CHECKSIG | 172 | ac
  OP_CHECKMULTISIG | 174 | ae
+
+ Script | Locking Model | Unlocking Model | Common Hex
+ ------ | ------------- | --------------- | ----------
+ P2PK | Single Public key | Single signature by the corresponding private key
 
 ## Common limits/numbers:
  * 10,000 bytes for the witness script.
