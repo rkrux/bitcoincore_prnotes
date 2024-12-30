@@ -53,6 +53,11 @@ see the unlocking code to have all the spending data - multiple signatures, full
 	* In legacy scripts, uncompressed public keys were also used that were
  65 bytes in length expressed by both the X and Y coordinates (& 04 prefix). 
  They were more expensive to spend due to leading to larger transaction size.
+ * `OP_HASH160` (& `OP_RIPEMD160`) returns a 160-bit (20 bytes) hash, that's why 
+there'd be a `14` hex value succeeding it - `a914`. Common scripts using it are 
+`P2PKH`, `P2SH`, `P2WPKH`.
+ * `OP_SHA256` (& `OP_HASH256`) returns a 256-bit (32 bytes) hash, that's why a
+ `20` hex value would be present after it - `a820` or `aa20`.
 
 ### Common Opcodes
 
@@ -69,6 +74,7 @@ see the unlocking code to have all the spending data - multiple signatures, full
  OP_RIPEMD160 | 166 | a6
  OP_SHA256 | 168 | a8
  OP_HASH160 | 169 | a9
+ OP_HASH256 | 170 | aa
  OP_CHECKSIG | 172 | ac
  OP_CHECKMULTISIG | 174 | ae
 
