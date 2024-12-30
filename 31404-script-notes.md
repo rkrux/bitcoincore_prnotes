@@ -118,7 +118,21 @@ there'd be a `14` hex value succeeding it - `a914`. Common scripts using it are
  P2SH | OP_HASH160 OP_PUSHBYTES_20 20_BYTES_SCRIPTHASH OP_EQUAL | a914<40-chars>87
  P2WPKH | OP_0 OP_PUSHBYTES_20 20_BYTES_PUBKEYHASH | 0014<40-chars>
  P2WSH | OP_0 OP_PUSHBYTES_32 32_BYTES_SCRIPTHASH | 0020<64-chars>
- P2TR | OP_1 OP_PUSHBYTES_32 32_BYTES_TWEAKED_PUBKEY | 0120<64-chars>
+ P2TR | OP_1 OP_PUSHBYTES_32 32_BYTES_TWEAKED_PUBKEY | 5120<64-chars>
+
+ Script | Common Unlocking ASM | Common Unlocking Hex
+ ------ | -------------------- | --------------------
+ P2PK | OP_PUSHBYTES_72 72_BYTES_SIG | 48<144-chars>
+ P2PKH | OP_PUSHBYTES_72 72_BYTES_SIG OP_PUSHBYTES_33 33_BYTES_PUBKEY | 48<144-chars>21<66-chars>
+ P2MS | OP_0 OP_PUSHBYTES_72 72_BYTES_SIG | 0048<144-chars>
+ P2SH | OP_0 OP_PUSHBYTES_72 72_BYTES_SIG OP_PUSHBYTES_XX XX_BYTES_SCRIPT | 0048<144-chars><XX-in-hex><XX*2-chars>
+ P2WPKH | O2 OP_PUSHBYTES_72 72_BYTES_SIG OP_PUSHBYTES_33 33_BYTES_PUBKEY | 0248<144-chars>21<66-chars
+ P2WSH | 03 OP_0 OP_PUSHBYTES_72 72_BYTES_SIG OP_PUSHBYTES_XX XX_BYTES_SCRIPT | 030048<144-chars><XX-in-hex><XX*2-chars>
+ P2TR - KeyPath | O1 OP_PUSHBYTES_65 65_BYTES_SIG | 0141<130-chars>
+ P2TR - ScriptPath | O3
+
+#TODO:
+1. Add witness in P2TR
 
 ## Common limits/numbers:
  * 10,000 bytes for the witness script.
@@ -143,6 +157,11 @@ there'd be a `14` hex value succeeding it - `a914`. Common scripts using it are
  * `OP_1` at the start signifies Taproot that requires custom handling, no need
  to manually add the script elements on the stack like done in P2PKH, P2SH.
  * The addresses start from `bc1p` and are 62 chars in length.
+ * Taproot uses Schnorr Signatures, which are shorter than the ECDSA signatures.
+ They are usually 64-65 bytes long compared to 71-72 bytes ECDSA ones.
+ * In the `witness` section, just like for the `segwit` outputs, a witness items
+ count is pushed first signifying the following witness items count - 1 for
+ `KeyPath` spend & 3 or more for `ScriptPath` spend.
 
 ### KeyPath Spending
  * While spending from the `keypath`, a signature from a key is required. 
