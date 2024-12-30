@@ -40,6 +40,7 @@ see the unlocking code to have all the spending data - multiple signatures, full
  	* Hex: <00><20><32bytes(64chars)-scripthash>
 	* The `scriptPubKey` length is 34 bytes / 68 chars.
  * The addresses start from `bc1q` and the length can be 42 or 62 chars. 
+ * Uncompressed Public Keys are NOT allowed.
 
 ## Common script patterns
  * Upto 75 bytes can be pushed onto the stack starting from 1. Hex values: 01-4b
@@ -59,22 +60,43 @@ there'd be a `14` hex value succeeding it - `a914`. Common scripts using it are
  * `OP_SHA256` (& `OP_HASH256`) returns a 256-bit (32 bytes) hash, that's why a
  `20` hex value would be present after it - `a820` or `aa20`.
 
+ Script | Hash Function (at Top level)
+ ------ | -------------
+ P2PK | None
+ P2PKH | HASH160
+ P2MS | None
+ P2SH | HASH160
+ P2WPKH | HASH160
+ P2WSH | SHA256
+ P2TR | None
+
 ### Common Opcodes
 
  Name | Decimal | Hex
  ---- | ------- | ---
+ OP_0 | 00 | 00
+ OP_PUSHBYTES_20 | 20 | 14
+ OP_PUSHBYTES_32 | 32 | 20
+ OP_PUSHBYTES_33 | 33 | 21
+ OP_PUSHBYTES_65 | 65 | 41
+ .. | .. | .. 
  OP_1 | 81 | 51
  OP_2 | 82 | 52
  OP_3 | 83 | 53
- .. | .. | ..
  OP_16 | 96 | 60
+ .. | .. | ..
  OP_VERIFY | 105 | 69
  OP_RETURN | 106 | 6a
+ .. | .. | ..
+ OP_DUP | 118 | 76
+ .. | .. | ..
  OP_EQUAL | 135 | 87
+ .. | .. | ..
  OP_RIPEMD160 | 166 | a6
  OP_SHA256 | 168 | a8
  OP_HASH160 | 169 | a9
  OP_HASH256 | 170 | aa
+ .. | .. | ..
  OP_CHECKSIG | 172 | ac
  OP_CHECKMULTISIG | 174 | ae
 
@@ -97,6 +119,7 @@ there'd be a `14` hex value succeeding it - `a914`. Common scripts using it are
  script commitment hash from the `scriptpath`.
  * TweakedPublicKey ~ (KeyPathPublicKey + ScriptsTreeMerkleRoot) % N
  * `scriptPubKey`: <OP_1> <OP_PUSHBYTES_32> <TWEAKED_PUBLIC_KEY>
+ * Note: The raw 32-byte public key is used, not its hash.
  * `OP_1` at the start signifies Taproot that requires custom handling, no need
  to manually add the script elements on the stack like done in P2PKH, P2SH.
  * The addresses start from `bc1p` and are 62 chars in length.
