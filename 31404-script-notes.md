@@ -129,10 +129,7 @@ there'd be a `14` hex value succeeding it - `a914`. Common scripts using it are
  P2WPKH | O2 OP_PUSHBYTES_72 72_BYTES_SIG OP_PUSHBYTES_33 33_BYTES_PUBKEY | 0248<144-chars>21<66-chars
  P2WSH | 03 OP_0 OP_PUSHBYTES_72 72_BYTES_SIG OP_PUSHBYTES_XX XX_BYTES_SCRIPT | 030048<144-chars><XX-in-hex><XX*2-chars>
  P2TR - KeyPath | O1 OP_PUSHBYTES_65 65_BYTES_SIG | 0141<130-chars>
- P2TR - ScriptPath | O3
-
-#TODO:
-1. Add witness in P2TR
+ P2TR - ScriptPath | O3 #TODO: Add P2TR witness here
 
 ## Common limits/numbers:
  * 10,000 bytes for the witness script.
@@ -162,6 +159,9 @@ there'd be a `14` hex value succeeding it - `a914`. Common scripts using it are
  * In the `witness` section, just like for the `segwit` outputs, a witness items
  count is pushed first signifying the following witness items count - 1 for
  `KeyPath` spend & 3 or more for `ScriptPath` spend.
+ * `OP_CHECKMULTISIG` is disabled in TapScript.
+ * Merkle Path is the string concatenation of the leaf and branch hashes. The
+ path length is limited to 128 such hashes.
 
 ### KeyPath Spending
  * While spending from the `keypath`, a signature from a key is required. 
@@ -185,5 +185,5 @@ there'd be a `14` hex value succeeding it - `a914`. Common scripts using it are
  in the script tree.
  * Note: The pubkey from the `keypath` is still required while spending from the
  `scriptpath`.
- * Witness: <SPENDING_SCRIPT_SIGS><SPENDING_SCRIPT><CONTROL_BLOCK:PUBKEY_AND_MERKLEPATH>
+ * Witness: <SPENDING_SCRIPT_SIGS><SPENDING_SCRIPT><CONTROL_BLOCK:CONTROL_VERSION_PUBKEY_AND_MERKLEPATH>
 
