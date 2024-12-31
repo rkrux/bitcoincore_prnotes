@@ -147,6 +147,8 @@ there'd be a `14` hex value succeeding it - `a914`. Common scripts using it are
  * With the 520 byte limit, maximum 15 pubkeys can be used in the multi-sig 
    script nested inside the P2SH. More than 15 keys in the script is consensus
  invalid.
+ * The Merkle Path length is limited to 128 branch/leaf hashes. Thus, possible 
+ script trees are 2^128. 
 
 ## Taproot
  * It is essentially a superset of P2WKH and P2WSH as in both the spending paths
@@ -154,6 +156,7 @@ there'd be a `14` hex value succeeding it - `a914`. Common scripts using it are
  * The end pubkey that is used to generate the Taproot address is a `tweak` of 
  the public key of the `keypath` and the Merkle Root of the tree of the scripts
  used in the `scriptpath`.
+ * A script tree is NOT required to create a P2TR output script.
  * `Tweaking` is the modulo addition of the pubkey from the `keypath` to the 
  script commitment hash from the `scriptpath`.
  * TweakedPublicKey ~ (KeyPathPublicKey + ScriptsTreeMerkleRoot) % N
@@ -168,11 +171,11 @@ there'd be a `14` hex value succeeding it - `a914`. Common scripts using it are
  count is pushed first signifying the following witness items count - 1 for
  `KeyPath` spend & 3 or more for `ScriptPath` spend.
  * `OP_CHECKMULTISIG` is disabled in TapScript.
- * Merkle Path is the string concatenation of the leaf and branch hashes. The
- path length is limited to 128 such hashes. The longer the Merkle Path, the 
- larger is the unlocking script. Thus, more the transaction size and absolute fees.
- * It's recommended to put the commonly used script nearer to the root of the 
- tree, so that the Merkle Path is shorter, and hence lower fees.
+ * Merkle Path is the string concatenation of the leaf and branch hashes.
+ * The longer the Merkle Path, the larger is the unlocking script. Thus, more 
+ the transaction size and absolute fees. It's recommended to put the commonly 
+ used script nearer to the root of the tree, so that the Merkle Path is shorter, 
+ and hence lower fees.
 
 ### KeyPath Spending
  * While spending from the `keypath`, a signature from a key is required. 
