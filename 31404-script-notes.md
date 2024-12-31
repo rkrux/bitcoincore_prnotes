@@ -113,8 +113,8 @@ there'd be a `14` hex value succeeding it - `a914`. Common scripts using it are
  P2SH | 1 script hash | N script-inputs, 1 script hex | Original script hex (redeemScript) is required to verify the sigs because non-spending nodes don't have the script, OP_DUP is not needed because it's treated as a special case and the `redeemScript` is duplicated during stack execution 
  P2WPKH | 1 pubkey hash | 1 sig by privkey, 1 pubkey but in `witness` | Same as P2PKH but in `witness`
  P2WSH | 1 script hash | N script-inputs, 1 script hex but in `witness` | Same as P2SH but in `witness`
- P2TR - KeyPath | 1 tweaked pubkey | 1 sig by the `tweaked` privkey | Only the sig from the tweaked private key is enough, proves that the spender has both the base private key and the MerkleHash of the scripts tree. Since the locking script indeed contains the pubkey (and not the hash), it's not required to add it again in the `witness`
- P2TR - ScriptPath | 1 tweaked pubkey | N script-inputs, 1 script hex, control-block:1 base pubkey, merkle-path | Script inputs (data) and the spending script hex are used to indeed execute the spending script. The control block is used to prove that the spending script is part of the script tree. Adding the merke-path insead of only a signature by the tweaked public key because it's more thorough and completely proves where the spending script lies in the script tree. 
+ P2TR - KeyPath | 1 tweaked pubkey | 1 sig by the `tweaked` privkey | Only the sig from the tweaked private key is enough, proves that the spender has both the internal private key and the MerkleHash of the scripts tree. Since the locking script indeed contains the pubkey (and not the hash), it's not required to add it again in the `witness`
+ P2TR - ScriptPath | 1 tweaked pubkey | N script-inputs, 1 script hex, control-block:1 internal pubkey, merkle-path | Script inputs (data) and the spending script hex are used to indeed execute the spending script. The control block is used to prove that the spending script is part of the script tree. Adding the merke-path insead of only a signature by the tweaked public key because it's more thorough and completely proves where the spending script lies in the script tree. 
 
  ### Script Locking ASM/Hex
  Script | Common Locking ASM | Common Locking Hex
@@ -147,6 +147,8 @@ there'd be a `14` hex value succeeding it - `a914`. Common scripts using it are
  * With the 520 byte limit, maximum 15 pubkeys can be used in the multi-sig 
    script nested inside the P2SH. More than 15 keys in the script is consensus
  invalid.
+ * The Merkle Path length is limited to 128 branch/leaf hashes. Thus, possible 
+ script trees are 2^128. 
 
 ## Taproot
  * It is essentially a superset of P2WKH and P2WSH as in both the spending paths
@@ -154,6 +156,7 @@ there'd be a `14` hex value succeeding it - `a914`. Common scripts using it are
  * The end pubkey that is used to generate the Taproot address is a `tweak` of 
  the public key of the `keypath` and the Merkle Root of the tree of the scripts
  used in the `scriptpath`.
+ * A script tree is NOT required to create a P2TR output script.
  * `Tweaking` is the modulo addition of the pubkey from the `keypath` to the 
  script commitment hash from the `scriptpath`.
  * TweakedPublicKey ~ (KeyPathPublicKey + ScriptsTreeMerkleRoot) % N
@@ -168,15 +171,16 @@ there'd be a `14` hex value succeeding it - `a914`. Common scripts using it are
  count is pushed first signifying the following witness items count - 1 for
  `KeyPath` spend & 3 or more for `ScriptPath` spend.
  * `OP_CHECKMULTISIG` is disabled in TapScript.
- * Merkle Path is the string concatenation of the leaf and branch hashes. The
- path length is limited to 128 such hashes. The longer the Merkle Path, the 
- larger is the unlocking script. Thus, more the transaction size and absolute fees.
- * It's recommended to put the commonly used script nearer to the root of the 
- tree, so that the Merkle Path is shorter, and hence lower fees.
+ * Merkle Path is the string concatenation of the leaf and branch hashes.
+ * The longer the Merkle Path, the larger is the unlocking script. Thus, more 
+ the transaction size and absolute fees. It's recommended to put the commonly 
+ used script nearer to the root of the tree, so that the Merkle Path is shorter, 
+ and hence lower fees.
+ * 192 (`0xc0`) is the current leaf script version used in Taproot Scripts - `tapscript`.
 
 ### KeyPath Spending
  * While spending from the `keypath`, a signature from a key is required. 
- Multiple keys can be used/aggregated to form the final single key this is 
+ Multiple keys can be used/aggregated to form the final single key - this is 
  possible due to Schnorr Signatures and PubKey Aggregation. It is tweaked by the
  script commitment hash and then the signature from the final tweaked key goes 
  in the witness.
