@@ -60,6 +60,7 @@ there'd be a `14` hex value succeeding it - `a914`. Common scripts using it are
  * `OP_SHA256` (& `OP_HASH256`) returns a 256-bit (32 bytes) hash, that's why a
  `20` hex value would be present after it - `a820` or `aa20`.
 
+ ### Scripts Hash functions
  Script | Hash Function (at Top level)
  ------ | -------------
  P2PK | None
@@ -70,13 +71,17 @@ there'd be a `14` hex value succeeding it - `a914`. Common scripts using it are
  P2WSH | SHA256
  P2TR | None
 
+ ### Commonly used Opcodes
  Name | Decimal | Hex
  ---- | ------- | ---
  OP_0 | 00 | 00
  OP_PUSHBYTES_20 | 20 | 14
  OP_PUSHBYTES_32 | 32 | 20
  OP_PUSHBYTES_33 | 33 | 21
+ OP_PUSHBYTES_64 | 64 | 40
  OP_PUSHBYTES_65 | 65 | 41
+ OP_PUSHBYTES_71 | 71 | 47
+ OP_PUSHBYTES_72 | 72 | 48
  .. | .. | .. 
  OP_1 | 81 | 51
  OP_2 | 82 | 52
@@ -99,6 +104,7 @@ there'd be a `14` hex value succeeding it - `a914`. Common scripts using it are
  OP_CHECKSIG | 172 | ac
  OP_CHECKMULTISIG | 174 | ae
 
+ ### Script Locking Unlocking Mental Models
  Script | Locking Model | Unlocking Model | Notes 
  ------ | ------------- | --------------- | -----
  P2PK | 1 pubkey | 1 sig by privkey | Just the sig is need that will be verified
@@ -110,6 +116,7 @@ there'd be a `14` hex value succeeding it - `a914`. Common scripts using it are
  P2TR - KeyPath | 1 tweaked pubkey | 1 sig by the `tweaked` privkey | Only the sig from the tweaked private key is enough, proves that the spender has both the base private key and the MerkleHash of the scripts tree. Since the locking script indeed contains the pubkey (and not the hash), it's not required to add it again in the `witness`
  P2TR - ScriptPath | 1 tweaked pubkey | N script-inputs, 1 script hex, control-block:1 base pubkey, merkle-path | Script inputs (data) and the spending script hex are used to indeed execute the spending script. The control block is used to prove that the spending script is part of the script tree. Adding the merke-path insead of only a signature by the tweaked public key because it's more thorough and completely proves where the spending script lies in the script tree. 
 
+ ### Script Locking ASM/Hex
  Script | Common Locking ASM | Common Locking Hex
  ------ | ------------------ | ------------------
  P2PK | OP_PUSHBYTES_33 33_BYTES_PUBKEY OP_CHECKSIG | 21<66-chars>ac
@@ -120,6 +127,7 @@ there'd be a `14` hex value succeeding it - `a914`. Common scripts using it are
  P2WSH | OP_0 OP_PUSHBYTES_32 32_BYTES_SCRIPTHASH | 0020<64-chars>
  P2TR | OP_1 OP_PUSHBYTES_32 32_BYTES_TWEAKED_PUBKEY | 5120<64-chars>
 
+ ### Script Unlocking ASM/Hex
  Script | Common Unlocking ASM | Common Unlocking Hex
  ------ | -------------------- | --------------------
  P2PK | OP_PUSHBYTES_72 72_BYTES_SIG | 48<144-chars>
