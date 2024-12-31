@@ -113,8 +113,8 @@ there'd be a `14` hex value succeeding it - `a914`. Common scripts using it are
  P2SH | 1 script hash | N script-inputs, 1 script hex | Original script hex (redeemScript) is required to verify the sigs because non-spending nodes don't have the script, OP_DUP is not needed because it's treated as a special case and the `redeemScript` is duplicated during stack execution 
  P2WPKH | 1 pubkey hash | 1 sig by privkey, 1 pubkey but in `witness` | Same as P2PKH but in `witness`
  P2WSH | 1 script hash | N script-inputs, 1 script hex but in `witness` | Same as P2SH but in `witness`
- P2TR - KeyPath | 1 tweaked pubkey | 1 sig by the `tweaked` privkey | Only the sig from the tweaked private key is enough, proves that the spender has both the base private key and the MerkleHash of the scripts tree. Since the locking script indeed contains the pubkey (and not the hash), it's not required to add it again in the `witness`
- P2TR - ScriptPath | 1 tweaked pubkey | N script-inputs, 1 script hex, control-block:1 base pubkey, merkle-path | Script inputs (data) and the spending script hex are used to indeed execute the spending script. The control block is used to prove that the spending script is part of the script tree. Adding the merke-path insead of only a signature by the tweaked public key because it's more thorough and completely proves where the spending script lies in the script tree. 
+ P2TR - KeyPath | 1 tweaked pubkey | 1 sig by the `tweaked` privkey | Only the sig from the tweaked private key is enough, proves that the spender has both the internal private key and the MerkleHash of the scripts tree. Since the locking script indeed contains the pubkey (and not the hash), it's not required to add it again in the `witness`
+ P2TR - ScriptPath | 1 tweaked pubkey | N script-inputs, 1 script hex, control-block:1 internal pubkey, merkle-path | Script inputs (data) and the spending script hex are used to indeed execute the spending script. The control block is used to prove that the spending script is part of the script tree. Adding the merke-path insead of only a signature by the tweaked public key because it's more thorough and completely proves where the spending script lies in the script tree. 
 
  ### Script Locking ASM/Hex
  Script | Common Locking ASM | Common Locking Hex
@@ -176,7 +176,7 @@ there'd be a `14` hex value succeeding it - `a914`. Common scripts using it are
 
 ### KeyPath Spending
  * While spending from the `keypath`, a signature from a key is required. 
- Multiple keys can be used/aggregated to form the final single key this is 
+ Multiple keys can be used/aggregated to form the final single key - this is 
  possible due to Schnorr Signatures and PubKey Aggregation. It is tweaked by the
  script commitment hash and then the signature from the final tweaked key goes 
  in the witness.
