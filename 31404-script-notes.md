@@ -176,6 +176,7 @@ there'd be a `14` hex value succeeding it - `a914`. Common scripts using it are
  the transaction size and absolute fees. It's recommended to put the commonly 
  used script nearer to the root of the tree, so that the Merkle Path is shorter, 
  and hence lower fees.
+* 192 (`0xc0`) is the current leaf script version used in Taproot Scripts - `tapscript`.
 
 ### KeyPath Spending
  * While spending from the `keypath`, a signature from a key is required. 
