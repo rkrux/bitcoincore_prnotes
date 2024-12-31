@@ -169,7 +169,10 @@ there'd be a `14` hex value succeeding it - `a914`. Common scripts using it are
  `KeyPath` spend & 3 or more for `ScriptPath` spend.
  * `OP_CHECKMULTISIG` is disabled in TapScript.
  * Merkle Path is the string concatenation of the leaf and branch hashes. The
- path length is limited to 128 such hashes.
+ path length is limited to 128 such hashes. The longer the Merkle Path, the 
+ larger is the unlocking script. Thus, more the transaction size and absolute fees.
+ * It's recommended to put the commonly used script nearer to the root of the 
+ tree, so that the Merkle Path is shorter, and hence lower fees.
 
 ### KeyPath Spending
  * While spending from the `keypath`, a signature from a key is required. 
@@ -180,7 +183,7 @@ there'd be a `14` hex value succeeding it - `a914`. Common scripts using it are
  * Since tweaking is required while "unlocking" the output, the script tree 
  needs to be stored and retrieved while spending from the `keypath` as well.
  * Only 1 item - a signature - is present in the `witness` field.
- * Witness: <KEY_SIGNATURE>
+ * Witness: `<KEY_SIGNATURE>`
 
 ### ScriptPath Spending
  * In the `scriptpath`, there can be bunch of scripts from which any one can be 
@@ -193,5 +196,5 @@ there'd be a `14` hex value succeeding it - `a914`. Common scripts using it are
  in the script tree.
  * Note: The pubkey from the `keypath` is still required while spending from the
  `scriptpath`.
- * Witness: <SPENDING_SCRIPT_SIGS><SPENDING_SCRIPT><CONTROL_BLOCK:CONTROL_VERSION_PUBKEY_AND_MERKLEPATH>
+ * Witness: `<SPENDING_SCRIPT_SIGS><SPENDING_SCRIPT><CONTROL_BLOCK:CONTROL_VERSION_AND_PUBKEY_AND_MERKLEPATH>`
 
