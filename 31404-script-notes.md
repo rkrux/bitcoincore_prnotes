@@ -140,7 +140,7 @@ there'd be a `14` hex value succeeding it - `a914`. Common scripts using it are
  P2WPKH | 02 OP_PUSHBYTES_72 72_BYTES_SIG OP_PUSHBYTES_33 33_BYTES_PUBKEY | 0248<144-chars>21<66-chars
  P2WSH | 03 OP_0 OP_PUSHBYTES_72 72_BYTES_SIG OP_PUSHBYTES_XX XX_BYTES_SCRIPT | 030048<144-chars><XX-in-hex><XX*2-chars>
  P2TR - KeyPath | 01 OP_PUSHBYTES_65 65_BYTES_SIG | 0141<130-chars>
- P2TR - ScriptPath | 03 #TODO: Add P2TR witness here
+ P2TR - ScriptPath | 03 OP_PUSHBYTES_65 65_BYTES_SIG OP_PUSHBYTES_XX XX_BYTES_SCRIPT c0<32_BYTES_INTERNALPUBKEY><MERKLEPATH>
 
 ## Common limits/numbers:
  * 10,000 bytes for the witness script.
