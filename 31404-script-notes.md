@@ -143,13 +143,16 @@ there'd be a `14` hex value succeeding it - `a914`. Common scripts using it are
  P2TR - ScriptPath | 03 OP_PUSHBYTES_65 65_BYTES_SIG OP_PUSHBYTES_XX XX_BYTES_SCRIPT c0<32_BYTES_INTERNALPUBKEY><MERKLEPATH>
 
 ## Common limits/numbers:
- * 10,000 bytes for the witness script.
+ * 10,000 bytes for the total script size including the scriptSig. For Tapscript,
+ there is no such limit including the witness data.
  * 100 stack items before the witness script in witness. 
  * 520 bytes limit each stack item.
  * 520 bytes limit for the redeemScript (much smaller than the witnessScript).
  * With the 520 byte limit, maximum 15 pubkeys can be used in the multi-sig 
    script nested inside the P2SH. More than 15 keys in the script is consensus
  invalid.
+ * Max 1000 items in the stack at any point during execution.
+ * Max 201 non-push opcodes in the script, no such limit for TapScript.
  * The Merkle Path length is limited to 128 branch/leaf hashes. Thus, possible 
  script trees are 2^128. 
 
