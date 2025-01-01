@@ -29,6 +29,9 @@ in the locking code.
 when they spend those outputs in future transactions. That's why it's common to 
 see the unlocking code to have all the spending data - multiple signatures, full
 `witnessScript` or `redeemScript`, control block (in case of Taproot).
+- There is a bug in `OP_CHECKMULTISIG` due to which it pops one more item than
+ what is necessary. To offset this, a `OP_0` would be seen at the start of the
+ unlocking scripts of P2MS, P2SH, P2WSH outputs. 
 
 ## Segwit
  * `OP_0` at the start of the "locking script"/`scriptPubKey` signifies 
@@ -134,10 +137,10 @@ there'd be a `14` hex value succeeding it - `a914`. Common scripts using it are
  P2PKH | OP_PUSHBYTES_72 72_BYTES_SIG OP_PUSHBYTES_33 33_BYTES_PUBKEY | 48<144-chars>21<66-chars>
  P2MS | OP_0 OP_PUSHBYTES_72 72_BYTES_SIG | 0048<144-chars>
  P2SH | OP_0 OP_PUSHBYTES_72 72_BYTES_SIG OP_PUSHBYTES_XX XX_BYTES_SCRIPT | 0048<144-chars><XX-in-hex><XX*2-chars>
- P2WPKH | O2 OP_PUSHBYTES_72 72_BYTES_SIG OP_PUSHBYTES_33 33_BYTES_PUBKEY | 0248<144-chars>21<66-chars
+ P2WPKH | 02 OP_PUSHBYTES_72 72_BYTES_SIG OP_PUSHBYTES_33 33_BYTES_PUBKEY | 0248<144-chars>21<66-chars
  P2WSH | 03 OP_0 OP_PUSHBYTES_72 72_BYTES_SIG OP_PUSHBYTES_XX XX_BYTES_SCRIPT | 030048<144-chars><XX-in-hex><XX*2-chars>
- P2TR - KeyPath | O1 OP_PUSHBYTES_65 65_BYTES_SIG | 0141<130-chars>
- P2TR - ScriptPath | O3 #TODO: Add P2TR witness here
+ P2TR - KeyPath | 01 OP_PUSHBYTES_65 65_BYTES_SIG | 0141<130-chars>
+ P2TR - ScriptPath | 03 OP_PUSHBYTES_65 65_BYTES_SIG OP_PUSHBYTES_XX XX_BYTES_SCRIPT c0<32_BYTES_INTERNALPUBKEY><MERKLEPATH>
 
 ## Common limits/numbers:
  * 10,000 bytes for the witness script.
@@ -157,11 +160,21 @@ there'd be a `14` hex value succeeding it - `a914`. Common scripts using it are
  the public key of the `keypath` and the Merkle Root of the tree of the scripts
  used in the `scriptpath`.
  * A script tree is NOT required to create a P2TR output script.
- * `Tweaking` is the modulo addition of the pubkey from the `keypath` to the 
- script commitment hash from the `scriptpath`.
- * TweakedPublicKey ~ (KeyPathPublicKey + ScriptsTreeMerkleRoot) % N
+ * In every level of the Script, a `tag` is prefix before hashing, namely: 
+ `TapLeaf` at the script level, `TapBranch` at the internal branch level, and
+ `TapTweak` that is `publicKey + merkleRoot`.
+ * Merkle Root is also a `TapBranch` unless only 1 script is used in which case 
+ it would be a `TapLeaf`.
+ * A `TapBranch` is calculated by lexographically sorting and concatenating 2 
+ `TapLeafs or TapBranches` and then taghashing them together. **Note**: Because of
+ lexographic sorting, the lower hash comes first. 
+ * `Tweak` is the modulo addition of the pubkey from the `keypath`
+ to the script commitment hash from the `scriptpath` ~ (KeyPathPublicKey + ScriptsTreeMerkleRoot) % N.
+ * `TweakedPublicKey` is the addition to the publicKey by a new point generated
+ by the multiplication of the generator point to `tweak`. Only the X-coordinate
+ of the resultant point is considered, which comes out to be the final public key.
  * `scriptPubKey`: <OP_1> <OP_PUSHBYTES_32> <TWEAKED_PUBLIC_KEY>
- * Note: The raw 32-byte public key is used, not its hash.
+ * **Note**: The raw 32-byte public key is used, not its hash.
  * `OP_1` at the start signifies Taproot that requires custom handling, no need
  to manually add the script elements on the stack like done in P2PKH, P2SH.
  * The addresses start from `bc1p` and are 62 chars in length.
@@ -181,12 +194,23 @@ there'd be a `14` hex value succeeding it - `a914`. Common scripts using it are
 ### KeyPath Spending
  * While spending from the `keypath`, a signature from a key is required. 
  Multiple keys can be used/aggregated to form the final single key - this is 
- possible due to Schnorr Signatures and PubKey Aggregation. It is tweaked by the
- script commitment hash and then the signature from the final tweaked key goes 
- in the witness.
+ possible due to Schnorr Signatures and Key Aggregation.
+ * The original private key is tweaked (addition of the `tweak`) and then 
+ the signature from the final tweaked key goes in the witness.
+ * If the original private key produces an odd public key, then it must be
+ negated first to produce an even public key. Negation is done by subtracting the
+ private key from the n (number of points in the curve).
+ * Interestingly, the signature done by the tweaked private key is corresponded
+ by the tweaked public key.
  * Since tweaking is required while "unlocking" the output, the script tree 
- needs to be stored and retrieved while spending from the `keypath` as well.
+ (atleast the script merkle root) needs to be stored and retrieved while spending
+ from the `keypath` as well.
  * Only 1 item - a signature - is present in the `witness` field.
+ * Signing process: tweaked private key -> signature hash -> witness
+ * A SigHash (signature hash) is a message that needs to be signed by the private
+ key that would later be verified by the corresponding public key. This message
+ contains few elements of the transaction the input is a part of.
+ * **Note**: Every input gets its own signature.
  * Witness: `<KEY_SIGNATURE>`
 
 ### ScriptPath Spending
@@ -198,7 +222,6 @@ there'd be a `14` hex value succeeding it - `a914`. Common scripts using it are
  spending script, control block: contains pubkey from the `keypath` and the 
  `MerklePath` of the spending script to prove the presence of the spending script
  in the script tree.
- * Note: The pubkey from the `keypath` is still required while spending from the
+ * **Note**: The pubkey from the `keypath` is still required while spending from the
  `scriptpath`.
- * Witness: `<SPENDING_SCRIPT_SIGS><SPENDING_SCRIPT><CONTROL_BLOCK:CONTROL_VERSION_AND_PUBKEY_AND_MERKLEPATH>`
-
+ * Witness: `<SPENDING_SCRIPT_SIG><SPENDING_SCRIPT><CONTROL_BLOCK:CONTROL_VERSION_AND_PUBKEY_AND_MERKLEPATH>`
