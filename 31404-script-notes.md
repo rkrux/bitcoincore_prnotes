@@ -29,6 +29,9 @@ in the locking code.
 when they spend those outputs in future transactions. That's why it's common to 
 see the unlocking code to have all the spending data - multiple signatures, full
 `witnessScript` or `redeemScript`, control block (in case of Taproot).
+- There is a bug in `OP_CHECKMULTISIG` due to which it pops one more item than
+ what is necessary. To offset this, a `OP_0` would be seen at the start of the
+ unlocking scripts of P2MS, P2SH, P2WSH outputs. 
 
 ## Segwit
  * `OP_0` at the start of the "locking script"/`scriptPubKey` signifies 
