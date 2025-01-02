@@ -228,3 +228,4 @@ there'd be a `14` hex value succeeding it - `a914`. Common scripts using it are
  * **Note**: The pubkey from the `keypath` is still required while spending from the
  `scriptpath`.
  * Witness: `<SPENDING_SCRIPT_SIG><SPENDING_SCRIPT><CONTROL_BLOCK:CONTROL_VERSION_AND_PUBKEY_AND_MERKLEPATH>`
+ * Transaction Script Spend Mainnet: https://mempool.space/tx/7393096d97bfee8660f4100ffd61874d62f9a65de9fb6acf740c4c386990ef73
