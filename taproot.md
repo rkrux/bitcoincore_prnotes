@@ -19,3 +19,5 @@
  with the pubkey. At the end of the script, there's a `OP_NUMEQUAL` opcode that
  verifies the total matched signatures with a number preceding this opcode.
 
+Few ways to achieve m-of-n functionality of CHECKMULTISIG in Taproot
+* #TODO: Add ways here 
