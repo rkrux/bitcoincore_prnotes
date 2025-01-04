@@ -106,6 +106,7 @@ there'd be a `14` hex value succeeding it - `a914`. Common scripts using it are
  .. | .. | ..
  OP_CHECKSIG | 172 | ac
  OP_CHECKMULTISIG | 174 | ae
+ OP_CHECKSIGADD | 186 | ba
 
  ### Script Locking Unlocking Mental Models
  Script | Locking Model | Unlocking Model | Notes 
