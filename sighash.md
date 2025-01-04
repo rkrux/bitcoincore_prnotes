@@ -32,3 +32,20 @@
  SIGHASH_ALL - SIGHASH_ANYONECANPAY | I don't care who else funds the transaction as long as certain recipients recieve certain amounts
  SIGHASH_NONE - SIGHASH_ANYONECANPAY | Neither do I care who receives the funds, nor do I care who else contributes in the transaction; can be thought of as burning my funds or proving ownership of the funds.
  SIGHASH_SINGLE - SIGHASH_ANYONECANPAY | I don't care who else funds the transaction as long as this recipient receives a certain amount.
+
+### SIGHASH_SINGLE Bug
+* Interestingly, for the `SIGHASH_SINGLE` type, if there is no corresponding output,
+ then the software is programmed to consider signing the integer 1 here:
+ https://github.com/bitcoin/bitcoin/blob/28.x/src/script/interpreter.cpp#L1618-L1624
+* If somehow the signature of the integer `1` from the private key is available
+ in public, then an attacker can create a transaction that has more inputs than
+ the outputs. For all those inputs that don't have a corresponding output, the
+ attacker can add the publicly available signature with the sighash type
+ `SIGHASH_SINGLE`. The core software in nodes will be able to verify such
+ transactions, and they can get mined!
+* Remedy: Core doesn't sign such transactions where there is no corresponding
+ output for the inputs in case of `SIGHASH_SINGLE` type:
+ https://github.com/bitcoin/bitcoin/blob/28.x/src/script/sign.cpp#L823-L826. But
+ other wallet softwares still can!
+* Taproot specification doesn't allow signing such transactions as well:
+ https://github.com/bitcoin/bips/blob/master/bip-0341.mediawiki?plain=1#L95
