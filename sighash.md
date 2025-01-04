@@ -10,6 +10,10 @@
  input.
 * The `SIGHASH_TYPE` is appended at the end of the DER encoded signatures in the
  transaction.
+* Every input can have a different `SIGHASH_TYPE` in its signature.
+* A `SIGHASH_NONE` type expects another input to have a `SIGHASH_ALL` type in its
+ signature. Otherwise if no outputs are signed by any of the input signatures, the
+ miner can simply change the output upon noticing this kind of transaction.
 
  Type | Value | Meaning 
  ---- | ----- | ------- 
