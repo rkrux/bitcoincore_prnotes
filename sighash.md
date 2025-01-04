@@ -49,3 +49,4 @@
  other wallet softwares still can!
 * Taproot specification doesn't allow signing such transactions as well:
  https://github.com/bitcoin/bips/blob/master/bip-0341.mediawiki?plain=1#L95
+* Reference transaction on mainnet: https://mempool.space/tx/791fe035d312dcf9196b48649a5c9a027198f623c0a5f5bd4cc311b8864dd0cf
