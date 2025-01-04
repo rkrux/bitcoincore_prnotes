@@ -2,6 +2,12 @@
 
 * Depending upon the kind of transaction data signed, there are different ways
  signatures can be created for the inputs in the transaction.
+* The data inside the Sighash once signed by any signer will be verified by the 
+ nodes when the transaction is received or found in a block.
+* Essentially signing any transaction data means finalising the data in the
+ transaction. It can't be changed anymore if the transaction needs to be mined.
+* The corresponding output below means the output with the same index as the
+ input.
 
  Type | Value | Meaning 
  ---- | ----- | ------- 
@@ -11,3 +17,4 @@
  SIGHASH_ALL - SIGHASH_ANYONECANPAY | 81 | Sign only 1 input and all outputs
  SIGHASH_NONE - SIGHASH_ANYONECANPAY | 82 | Sign only 1 input and no outputs
  SIGHASH_SINGLE - SIGHASH_ANYONECANPAY | 83 | Sign only 1 input and 1 corresponding output
+
