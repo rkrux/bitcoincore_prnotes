@@ -49,4 +49,10 @@
  other wallet softwares still can!
 * Taproot specification doesn't allow signing such transactions as well:
  https://github.com/bitcoin/bips/blob/master/bip-0341.mediawiki?plain=1#L95
-* Reference transaction on mainnet: https://mempool.space/tx/791fe035d312dcf9196b48649a5c9a027198f623c0a5f5bd4cc311b8864dd0cf
+
+#### Reference transaction on mainnet
+ * https://mempool.space/tx/791fe035d312dcf9196b48649a5c9a027198f623c0a5f5bd4cc311b8864dd0cf
+ * There are 3 inputs and 1 output.
+ * The last 2 inputs are multisig 2 of 3.
+ * Notice the presence of `03 (SIGHASH_SINGLE)` at the end of 4 signatures of 
+ the last 2 inputs - 2 signatures for 2 inputs each.
