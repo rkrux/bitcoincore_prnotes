@@ -8,7 +8,31 @@
  Signatures.
 
 ## ScriptPath
-* A 998-of-999 Taproot Script Spend Mainnet: https://mempool.space/tx/7393096d97bfee8660f4100ffd61874d62f9a65de9fb6acf740c4c386990ef73
+
+### A 998-of-999 Taproot Script Spend
+ * On mainnet: https://mempool.space/tx/7393096d97bfee8660f4100ffd61874d62f9a65de9fb6acf740c4c386990ef73
+ * The whole transaction is ~99KB in size.
+ * The script path contains just 1 script, and no tree. Evident by the
+ lack of Merkle Path in control block (will come later).
+ * The spending script is of the format:
+ `OP_PUSHBYTES_32 32_BYTES_PUBKEY OP_CHECKSIG OP_PUSHBYTES_32 32_BYTES_PUBKEY 
+ OP_CHECKSIGADD OP_PUSHBYTES_32 32_BYTES_PUBKEY OP_CHECKSIGADD ...999times...
+ e603 OP_GREATERTHANPREQUAL`.
+ * `e603` is `998` in hex little endian format.
+ * The spending script means that 998 signatures out of a total 999 public keys
+ are required. It achieved multi-sig functionality in Tapscript with `CHECKSIGADD`. 
+ * The witness contains 1001 items in total.
+ * There are 998 valid signatures first, and then an invalid signature. Technically,
+ the last 998 keys have provided valid signatures but in this case all the pubkeys
+ are same.
+ * So the first 999 items in the witness are the signatures.
+ * Then is the full spending scrip in hex.
+ * Then comes the Control Block with the control version (c1) and the internal
+ public key of 32 bytes.
+ * **Note**: The Sigops for this transaction is 0! Because the sig opcodes in the
+ Tapscript are not included in the total block sigops limit. 
+
+- - - -
 
 * `OP_CHECKMULTISIG/OP_CHECKMULTISIGVERIFY` are disabled in TapScript due to being
  inefficient because there is an underlying 'polling' mechanism while verifying
