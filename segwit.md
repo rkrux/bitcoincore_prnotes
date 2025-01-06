@@ -51,6 +51,17 @@ txOut - <amount> <scriptPubKey>
  spend them.
 * TODO: Where in the code is the Segwit input treated as ACS for old nodes?
 
+### Brief on Scaling
 
-
+* The witness data is discounted in the SegWit transactions by a factor of 4. The
+ discount is reflected in the transaction size, and therefore in the transaction fees.
+* A fully serialised transaction is represented in Bytes, which is sent over the
+ wire.
+* For block size calculation, a new unit `Weight Units` is used, which is calculated
+ using `non-witness-data * 4 + witness-data` or `base-data-without-witness * 3 + `full-tx-data`.
+* This discounting incentivises the users in spending the inputs MORE. Otherwise,
+ the users would keep on storing bitcoins in new UTXOs and not spend them enough.
+* Besides, reducing the spending activity on the network, it would also increase
+ the UTXO set size & thereby discouraging the users with lower system confs to run
+ a bitcoin node.
 
