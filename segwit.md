@@ -1,10 +1,10 @@
 # Notes on Segregated Witness (SegWit)
 
 ## Transaction Format
- <nVersion> <txInsCount> <txIns> <txOutsCount> <txOuts> <nLockTime>
+ `<nVersion> <txInsCount> <txIns> <txOutsCount> <txOuts> <nLockTime>`
 
-txIn - <prevOutTx> <prevOutIndex> <scriptSig> <nSequence>
-txOut - <amount> <scriptPubKey>
+txIn - `<prevOutTx> <prevOutIndex> <scriptSig> <nSequence>`
+txOut - `<amount> <scriptPubKey>`
 
 * The `txId` is the double sha256 (`HASH256`) of the transaction elements.
 * Depending upon the `SIGHASH` type, different transaction elements are signed.
@@ -25,7 +25,7 @@ txOut - <amount> <scriptPubKey>
 * However, SegWit fixes the malleability issue in a more fundamental way.
 
 ## SegWit Transaction Format
- <nVersion> <segwitMarker=00> <segwitFlag=01> <txInsCount> <txIns> <txOutsCount> <txOuts> <witness> <nLockTime>
+ `<nVersion> <segwitMarker=00> <segwitFlag=01> <txInsCount> <txIns> <txOutsCount> <txOuts> <witness> <nLockTime>`
 
 * The txIn and txOut formats remain the same.
 * As seen and as evident in the name itsef, the `witness` is segregated from the
