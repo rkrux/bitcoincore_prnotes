@@ -1,10 +1,9 @@
 # Notes on Segregated Witness (SegWit)
 
 ## Transaction Format
- `<nVersion> <txInsCount> <txIns> <txOutsCount> <txOuts> <nLockTime>`
-
-txIn - `<prevOutTx> <prevOutIndex> <scriptSig> <nSequence>`
-txOut - `<amount> <scriptPubKey>`
+ 1. `<nVersion> <txInsCount> <txIns> <txOutsCount> <txOuts> <nLockTime>`
+ 2. txIn - `<prevOutTx> <prevOutIndex> <scriptSig> <nSequence>`
+ 3. txOut - `<amount> <scriptPubKey>`
 
 * The `txId` is the double sha256 (`HASH256`) of the transaction elements.
 * Depending upon the `SIGHASH` type, different transaction elements are signed.
@@ -58,7 +57,7 @@ txOut - `<amount> <scriptPubKey>`
 * A fully serialised transaction is represented in Bytes, which is sent over the
  wire.
 * For block size calculation, a new unit `Weight Units` is used, which is calculated
- using `non-witness-data * 4 + witness-data` or `base-data-without-witness * 3 + `full-tx-data`.
+ using `non-witness-data * 4 + witness-data` or `base-data-without-witness * 3 + full-tx-data`.
 * This discounting incentivises the users in spending the inputs MORE. Otherwise,
  the users would keep on storing bitcoins in new UTXOs and not spend them enough.
 * Besides, reducing the spending activity on the network, it would also increase
