@@ -33,6 +33,17 @@
  SIGHASH_NONE - SIGHASH_ANYONECANPAY | Neither do I care who receives the funds, nor do I care who else contributes in the transaction; can be thought of as burning my funds or proving ownership of the funds.
  SIGHASH_SINGLE - SIGHASH_ANYONECANPAY | I don't care who else funds the transaction as long as this recipient receives a certain amount.
 
+* `SIGHASH_ANYONECANPAY` can be used for **Crowdfunding** purposes. The first donator
+ adds one input with `SIGHASH_ANYONECANPAY | SIGHASH_ALL` signifying no new outputs
+ can be added. `SIGHASH_ALL` in this case is useful so that no one else ends up
+ adding an output - maybe for compliance or legal purposes.
+* `SIGHASH_NONE` can be thought of as creating a **Blank Cheque** where the spender
+ just adds the input and doesn't care who the recipients are. If the miner sees
+ such a transaction, then they would simply pay themselves by adding an output.
+ Whosoever wants to receive funds in this transaction must use `SIGHASH_ALL` so
+ that they ensure no one else can tamper with the transaction recipients. And if
+ they have to use `SIGHASH_ALL`, that means they must add an input in the transaction.
+
 ### SIGHASH_SINGLE Bug
 * Interestingly, for the `SIGHASH_SINGLE` type, if there is no corresponding output,
  then the software is programmed to consider signing the integer 1 here:
