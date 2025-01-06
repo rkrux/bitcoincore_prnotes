@@ -25,9 +25,32 @@ txOut - <amount> <scriptPubKey>
 * However, SegWit fixes the malleability issue in a more fundamental way.
 
 ## SegWit Transaction Format
- <nVersion> <segwitMarker> <segwitFlag> <txInsCount> <txIns> <txOutsCount> <txOuts> <witness> <nLockTime>
+ <nVersion> <segwitMarker=00> <segwitFlag=01> <txInsCount> <txIns> <txOutsCount> <txOuts> <witness> <nLockTime>
 
 * The txIn and txOut formats remain the same.
 * As seen and as evident in the name itsef, the `witness` is segregated from the
  input.
-* This `witness` data is not used while coming up with the `txId`.
+* This `witness` data is not used while coming up with the `txId`, and therefore
+ any malleability in the `witness` section doesn't affect the `txId`.
+* The `scriptSig` for witness inputs must be empty as per the specification, and
+ therefore there can be no malleability in it.
+* Interesingly, the `segwitMarker` was added at that particular position in the
+ transaction so that the old non-upgraded nodes see the segwit transactions as
+ having 0 inputs. Also, the the `flag` is `01` that is treated as the transaction
+ having 1 output. A transaction with 0 input and 1 output if such a transaction
+ is ever parsed by the old nodes but the segwit specific data (marker, flag, witness)
+ are not sent to the old nodes because they never ask for it.
+* The old un-upgraded nodes see a transaction spending segwit input as anyone can
+ spend (ACS) and together will the lack of signatures on these inputs, these transactions
+ are valid for old un-upgraded nodes as well. One of the reasons why funds should
+ not be sent to addresses that are treated as anyone can spend because ANYONE 
+ CAN indeed spend them.
+* This should not be a concern for SegWit transactions though because prior to
+ its activation majority of the nodes (and miners) would have upgraded and majority
+ of the network would be rejecting such SegWit transactions if anyone did try to
+ spend them.
+* TODO: Where in the code is the Segwit input treated as ACS for old nodes?
+
+
+
+
