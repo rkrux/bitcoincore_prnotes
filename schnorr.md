@@ -31,7 +31,6 @@ G * s = R + (X * e)
 - Verification involves multiplying the signature with the generator point and
  checking that it equals public nonce (R) plus public key (X) multiplied by the
  challenge (e).
-
 -----
 
 * Challenge (c or e) is constructed using all the public elements X, R, m. So that 
@@ -44,3 +43,13 @@ G * s = R + (X * e)
 * For a given X and m, signing again would lead to a new secret nonce (r), and
  hence a new R, and then a new s. Signing the same message using the same public
  key again would lead to a new signature!
+-----
+
+* The private key and the private nonce are scalar values.
+* Once multiplied the generator point, they yield points on the curve that become
+ the public key and the public nonce.
+* Schnorr signatures are preferred because of their linaerity and additive 
+ property. That's why they end up used in multi-signature algorithms such as
+ MuSig. There is no division or inverse calculation required in Schnorr like needed
+ in ECDSA signatures.
+-----
