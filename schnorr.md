@@ -185,3 +185,29 @@ ks = r2' + a1 * k1 + a2 * k2' - a2 * k1
 * This `ks` is the key that the malicious user needs to sign with. But this ks
  contains `k1` in the equation, which the malicious user (user 2) in this case 
  doesn't have. So the maluser can't be the only one signing now! 
+
+### Replay Attack
+* This technique is still prone to the replay attack i.e. if the same nonce is
+ used to sign another message by the honest user. The malicious user can send out
+ a new message for the honest user to sign but with the same nonce.
+* The public keys remain same so `l` is same, and then `ai` is same.
+
+```
+si = ri + ai * ki * e
+si' = ri + ai * ki * e'
+
+si' - si = ri + ai * ki * e' - (ri + ai * ki * e)
+si' - si = ri + ai * ki * e' - ri - ai * ki * e
+
+ri cancels out in right side
+
+si' - si = ai * ki * e' - ai * ki * e
+(si' - si) / (ai * e' - ai * e) = ki
+(si' - si) / ((e' - e) * ai) = ki
+```
+* `ki` can be found out just by subtracting the 2 signatures if the same nonce
+is used. `si', si, e', e, ai` are public and known to the attacker.
+* Imperative that once the nonce is used to come up with the partial signature,
+ it must be obliterated so that the attacker can't use it again to sign any other
+ message, otherwise the private key of the honest user would be leaked!
+
