@@ -128,6 +128,7 @@ s12 * G = (r2' + p2' * e) * G
 s12 = r2' + p2' * e
 s12 = s2'
 ```
+* Since s12 equals s2', so the malicious user can send their own signature here!
 * This attack is possible because of the linaerity of the Schnorr signatures.
 * One way to mitigate this attack is to mandate for the user 2 to sign a message
  with the corresponding private key for P2, which they will not have. But this
@@ -163,3 +164,24 @@ sG = sigma(si) * G
  = Ragg + sigma(Xi * ai) * e
 sG = Ragg + Xagg * e
 ```
+
+**Key Cancellation Mitigation**
+```
+s12 * G = R12 + X12 * e
+where X12 = a1 * X1 + a2 * X2 = a1 * X1 + a2 * (X2' - X1)
+ and R12 = R1 + R2 = R1 + R2' - R1 = R2'
+
+s12 * G = R2' + (a1 * X1 + a2 * (X2' - X1)) * e
+ = r2' * G + (a1 * X1 + a2 * X2' - a2 * X1) * e
+ = r2' * G + (a1 * G * k1 + a2 * G * k2' - a2 * G * k1) * e
+
+(r2' + ks * e) * G = (r2' + (a1 * k1 + a2 * k2' - a2 * k1) * e) * G
+
+Take off G, cancel out r2' on both sides, take off e on both sides
+
+ks = r2' + a1 * k1 + a2 * k2' - a2 * k1
+```
+
+* This `ks` is the key that the malicious user needs to sign with. But this ks
+ contains `k1` in the equation, which the malicious user (user 2) in this case 
+ doesn't have. So the maluser can't be the only one signing now! 
