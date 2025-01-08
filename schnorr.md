@@ -75,6 +75,17 @@ s / e = k
  from the signature becomes quite easy. It's only because of the private variable
  `r` that calculating the private key from the signature is not possible.
 
-### Adding Schnorr signatures (MultiSig)
+### Adding Schnorr signatures on same message (MultiSig)
+```
+s1 = r1 + k1 * e
+s2 = r2 + k2 * e
+
+s1 + s2 = r1 + k1 * e + r2 + k2 * e
+s1 + s2 = (r1 + r2) + (k1 + k2) * e
+s12 = r12 + k12 * e
+```
+* It's because of the linearity property that 2 signatures on the same message
+ can be aggregated, and still yield the combined signature in the form 
+ `r' + k' * e`.
 
 ### Key Cancellation Attack
