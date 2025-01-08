@@ -129,3 +129,9 @@ s12 = r2' + p2' * e
 s12 = s2'
 ```
 * This attack is possible because of the linaerity of the Schnorr signatures.
+* One way to mitigate this attack is to mandate for the user 2 to sign a message
+ with the corresponding private key for P2, which they will not have. But this
+ introduces one more step in the protocol and would need to be done for all the 
+ signers involved in the aggregation model.
+-----
+
