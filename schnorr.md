@@ -6,7 +6,7 @@ c, e = challenge
 r = secret nonce
 R = public nonce
 x, k = secret key
-X = public key
+X, P = public key
 m = message to be signed
 s = signature
 σ = (R, s) that's shared with the counterparty
@@ -18,10 +18,10 @@ G = generator point on the curve
 ### Sign
 ```
 k, r <- $
-X = k * G
+P = k * G
 R = r * G
 
-e = H(X || R || m)
+e = H(P || R || m)
 s = r + k * e
 σ = (R, s)
 ```
@@ -30,10 +30,10 @@ s = r + k * e
 ```
 G * s = G * (r + k * e)
 G * s = G * r + ((G * k) * e)
-G * s = R + (X * e)
+G * s = R + (P * e)
 ```
 - Verification involves multiplying the signature with the generator point and
- checking that it equals public nonce (R) plus public key (X) multiplied by the
+ checking that it equals public nonce (R) plus public key (X, P) multiplied by the
  challenge (e).
 -----
 
@@ -77,6 +77,8 @@ s / e = k
 
 ### Adding Schnorr signatures on same message (MultiSig)
 ```
+P12 = P1 + P2
+e = H(R1 || R2 || P1 || P2 || m)
 s1 = r1 + k1 * e
 s2 = r2 + k2 * e
 
@@ -89,3 +91,4 @@ s12 = r12 + k12 * e
  `r' + k' * e`.
 
 ### Key Cancellation Attack
+
