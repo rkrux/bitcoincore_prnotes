@@ -91,4 +91,41 @@ s12 = r12 + k12 * e
  `r' + k' * e`.
 
 ### Key Cancellation Attack
+* It's possible for a malicious user to choose their public key and nonce in
+ such a way that cancels out the public key and the public nonce of the other
+ user if the malicious user already knows them beforehand.
 
+```
+P1, R1
+P2 = P2' - P1
+R2 = R2' - R1
+```
+* User 1 is using P1 and R1 but the user 2 ends up using P2 and R2 values and
+ communicate them to user 1. Both P2 and R2 subtracts P1 and R1 from their actual
+ values (P2', R2') which they keep private.
+
+**Public Key and Nonce**
+```
+P12 = P1 + P2 = P1 + P2' - P1 = P2'
+R12 = R1 + R2 = R1 + R2' - R1 = R2'
+```
+* So P12 and R12 comes out to be the actual public key (P2') and nonce (R2') of
+ user 2.
+
+**Sign and Verify**
+* User 2 doesn't have the private key for (P2), nor the secnonce for R2, but that
+ need not matter, and they can create the combined signature themselves.
+ 
+```
+s1 = r1 + k1 * e
+s2' = r2' + k2' * e [s2' is never made public]
+
+s12 * G = R12 + P12 * e
+ = (R1 + R2) + (P1 + P2) * e
+ = (R1 + R2' - R1) + (P1 + P2' - P1) * e
+s12 * G = R2' + P2' * e
+s12 * G = (r2' + p2' * e) * G
+s12 = r2' + p2' * e
+s12 = s2'
+```
+* This attack is possible because of the linaerity of the Schnorr signatures.
