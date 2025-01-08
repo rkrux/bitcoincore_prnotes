@@ -17,6 +17,10 @@ G = generator point on the curve
 
 ### Sign
 ```
+k, r <- $
+X = k * G
+R = r * G
+
 e = H(X || R || m)
 s = r + k * e
 σ = (R, s)
@@ -53,3 +57,24 @@ G * s = R + (X * e)
  MuSig. There is no division or inverse calculation required in Schnorr like needed
  in ECDSA signatures.
 -----
+
+### Why nonce is needed
+* s and e are public.
+* r and k are private.
+
+```
+s = r + k * e
+(s - r) / e = k
+```
+
+```
+s = k * e
+s / e = k
+```
+* If r had not been there in the equation, then calculating the private key (k)
+ from the signature becomes quite easy. It's only because of the private variable
+ `r` that calculating the private key from the signature is not possible.
+
+### Adding Schnorr signatures (MultiSig)
+
+### Key Cancellation Attack
