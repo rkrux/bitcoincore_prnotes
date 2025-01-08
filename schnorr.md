@@ -135,3 +135,31 @@ s12 = s2'
  signers involved in the aggregation model.
 -----
 
+### Sig Aggregation
+* Another way to mitigate the key cancellation attack is to attach coefficients
+ in the signature equation so that the keys of the honest user are not cancelled
+ out.
+
+**Sign**
+```
+si = ri + ki * ai * e
+where 
+si, ri, ki belong to the user i
+ai = H(l || Xi)
+l = H(X1 || ... Xn)
+Xagg = sigma(ai * Xi) -> aggregate public key using linear combination
+Rgg = sigma(Ri)
+
+sagg = sigma(si)
+```
+
+**Verify**
+```
+sG = sigma(si) * G
+ = sigma(ri + ki * ai * e) * G
+ = sigma((ri * G) + (ki * ai * e * G))
+ = sigma(Ri + (Xi * ai * e))
+ = sigma(Ri) + sigma(Xi * ai * e)
+ = Ragg + sigma(Xi * ai) * e
+sG = Ragg + Xagg * e
+```
