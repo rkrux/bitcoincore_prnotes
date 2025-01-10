@@ -13,6 +13,8 @@
  ensures that the combined nonce of all signer also changes and is no longer 
  constant.
 
+* The aggregated public key is the weighted addition of all the public keys.
+
 ```
 si = ki + ki' + e * ai * pi
 
