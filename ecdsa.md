@@ -21,3 +21,14 @@ is also a valid signature.
 
 * More expensive computation due to the calculation of modular inverse while
  calculating `s`.
+
+* The intuition behind coming up with this equation is that the prover/signer
+ needs to prove to the verifier that they know the scalar `p` for the point `P`
+ without sharing it directly, and the "additive shift" is included in the equation
+ so that the verifier can't deduce the scalar for R `k` and the scalar for P `p`
+ themselves.
+
+* If the prover knows the discrete logs for `P` and `R`, then they come up with
+ an `s` that is `R = s(hG + rP)`. The very equation here lets the verifier verify
+ that the signer knows `p` but without revealing it.
+
