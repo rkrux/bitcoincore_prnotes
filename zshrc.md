@@ -56,4 +56,43 @@ alias bitcoinoutputpfiles="find . -type f -name '*.o' -ls"
  git switch $2
 }
 
+gpg_sign_and_verify() {
+  # Change into the specified directory
+  local dir="path/to/directory"
+  cd "$dir" || { echo "Failed to change directory to $dir"; return 1; }
+
+  if [[ -z "$2" ]]; then
+    echo "No second argument passed, using default signing file!"
+  fi
+
+  if [[ -z "$1" ]]; then
+    echo "No first argument passed, using default signing key!"
+  fi
+
+  local key_id="${1:-<keyidhere>}"
+  local file="${2:-<messagefilehere>}"
+  local sig_file="${file}.sig"
+
+  if [[ ! -f "$file" ]]; then
+    echo "Error: $file not found!"
+    return 1
+  fi
+
+  # Create an ASCII-armored detached signature using the specified key
+  gpg --yes --detach-sign --armor -u "$key_id" -o "$sig_file" "$file"
+
+  if [[ $? -eq 0 ]]; then
+    echo "Signature created: $sig_file"
+
+    # Automatically verify the signature
+    gpg --verify "$sig_file" "$file"
+
+    # Output the detached signature to stdout
+    cat "$sig_file"
+  else
+    echo "Failed to sign $file"
+    return 1
+  fi
+}
+alias gpgsigncodereview="gpg_sign_and_verify"
 ```
