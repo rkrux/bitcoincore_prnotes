@@ -36,6 +36,7 @@ digest algorithm makes the signer sign values of ALL the UTXOs being spent in th
 transaction.
 
 > // non_witness_utxos can only be dropped if the sighash type does not include SIGHASH_ANYONECANPAY
+
 Most likely because if ANYONECANPAY is used then the UTXO value of only the input
  being signed is committed to, more inputs can be added later in the transaction.
 Due to the nature of ANYONECANPAY, there's special handling as to how the
