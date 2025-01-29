@@ -60,9 +60,9 @@
  using `non-witness-data * 4 + witness-data` or `base-data-without-witness * 3 + full-tx-data`.
 * This discounting incentivises the users in spending the inputs MORE. Otherwise,
  the users would keep on storing bitcoins in new UTXOs and not spend them enough.
-* Besides, reducing the spending activity on the network, it would also increase
- the UTXO set size & thereby discouraging the users with lower system confs to run
- a bitcoin node.
+* In absence of Segwit, besides reducing the spending activity on the network, it
+  would also increase the UTXO set size & thereby discourage the users with lower
+  system confs to run a bitcoin node.
 * The `Weight Units` is the one that's used with the block size calculation of
  `4 million WUs`.
 * Another unit introduced is `Virtual Bytes (vB)`, which is calculated using 
