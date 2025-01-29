@@ -1,6 +1,6 @@
 # Notes on Segregated Witness (SegWit)
 
-## Transaction Format
+## Legacy Transaction Format
  1. `<nVersion> <txInsCount> <txIns> <txOutsCount> <txOuts> <nLockTime>`
  2. txIn - `<prevOutTx> <prevOutIndex> <scriptSig> <nSequence>`
  3. txOut - `<amount> <scriptPubKey>`
