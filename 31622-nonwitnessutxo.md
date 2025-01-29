@@ -1,0 +1,30 @@
+### Why does non witness utxo need full previous transaction to be sign?
+
+References:
+1. https://bitcoin.stackexchange.com/questions/113782/segwit-includes-the-input-amount-in-the-signaturehash-what-possible-attack-can
+2. https://bitcoinops.org/en/newsletters/2020/06/10/#fee-overpayment-attack-on-multi-input-segwit-transactions
+3. https://github.com/bitcoin/bips/blob/master/bip-0143.mediawiki#motivation
+
+Summary: To prevent fee overpayment attack on stateless signers.
+
+The stateless signers such as hardware wallets don't have access to the full
+blockchain and thus don't know the actual amount of the UTXO being spent by
+the transaction. Therefore, they rely on external parties to provide them with
+this data. A malicious external party can provide an incorrect UTXO value that
+is being spent - usually understating the amount so that the fee calculated by
+the signer is low, which the user will agree with. Underneath though, an UTXO
+with a higher value is being spent leading to the user overpaying in the fees
+unwillingly.
+
+To combat this, for non-witness-utxos such signers require the full previous 
+transaction details so that they can calculate the transaction id of that 
+transaction themselves, and thus verifying the authenticity of the value of the
+UTXO being spent.
+
+For witness-utxos though, the hash digest, which will be signed by the signer and
+later verified by the Bitcoin Core nodes, contains the amount value of the UTXO
+being spent so that if an incorrect UTXO value has been passed by a malicious
+party and later signed by the signer, the transaction containing this signature
+will be rejected by the nodes.
+
+ 
