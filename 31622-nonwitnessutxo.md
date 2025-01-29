@@ -1,4 +1,4 @@
-### Why does non witness utxo need full previous transaction to be sign?
+### Why does non witness utxo need full previous transaction to be signed?
 
 References:
 1. https://bitcoin.stackexchange.com/questions/113782/segwit-includes-the-input-amount-in-the-signaturehash-what-possible-attack-can
