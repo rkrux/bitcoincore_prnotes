@@ -9,3 +9,7 @@ restorewallet | Restores and loads a wallet from backup. The rescan is significa
 backupwallet | Safely copies the current wallet file to the specified destination | No
 importwallet |  Imports keys from a wallet dump file (see dumpwallet). Requires a new wallet backup to include imported keys. | Yes
 
+### RestoreWallet Trace
+wallet/rpc/backup.cpp | restorewallet()
+wallet/wallet.cpp | RestoreWallet(), LoadWallet(), LoadWalletInternal(), CWallet::Create(), CWallet::LoadWallet()
+wallet/walletdb.cpp | WalletBatch::LoadWallet(), LoadLegacyWalletRecords(), LoadRecords(), LoadRecords()
