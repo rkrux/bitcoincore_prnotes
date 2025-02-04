@@ -23,3 +23,12 @@ private key marked hdseed=1.
 wallet/rpc/backup.cpp | restorewallet()
 wallet/wallet.cpp | RestoreWallet(), LoadWallet(), LoadWalletInternal(), CWallet::Create(), CWallet::LoadWallet()
 wallet/walletdb.cpp | WalletBatch::LoadWallet(), LoadLegacyWalletRecords(), LoadRecords(), LoadRecords()
+
+### Dump Wallet Format
+* https://github.com/bitcoin/bitcoin/blob/28.x/src/wallet/rpc/backup.cpp#L778-L802
+
+```
+encodedSecretKey createdTime change/reserve/hdseed/inactivehdseed=1 # addr=<address> hdkeypath=m/0'/0'/k'
+scriptPubKeyHex createdTime cscript=1 # addr=<address>
+```
+
