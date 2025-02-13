@@ -37,6 +37,8 @@ transaction.
 
 > // non_witness_utxos can only be dropped if the sighash type does not include SIGHASH_ANYONECANPAY
 
+Reference: https://github.com/bitcoin/bitcoin/blob/master/src/psbt.cpp#L448
+
 Most likely because if ANYONECANPAY is used then the UTXO value of only the input
  being signed is committed to, more inputs can be added later in the transaction.
 Due to the nature of ANYONECANPAY, there's special handling as to how the
