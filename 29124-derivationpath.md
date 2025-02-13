@@ -20,9 +20,12 @@ private key marked hdseed=1.
 * // key at m/0'/0' (external) or m/0'/1' (internal)
 
 ### RestoreWallet Trace
+
+```
 wallet/rpc/backup.cpp | restorewallet()
 wallet/wallet.cpp | RestoreWallet(), LoadWallet(), LoadWalletInternal(), CWallet::Create(), CWallet::LoadWallet()
 wallet/walletdb.cpp | WalletBatch::LoadWallet(), LoadLegacyWalletRecords(), LoadRecords(), LoadRecords()
+```
 
 ### Dump Wallet Format
 * https://github.com/bitcoin/bitcoin/blob/28.x/src/wallet/rpc/backup.cpp#L778-L802
