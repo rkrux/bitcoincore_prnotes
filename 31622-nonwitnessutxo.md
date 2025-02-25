@@ -25,15 +25,16 @@ For witness-utxos though, the hash digest, which will be signed by the signer an
 later verified by the Bitcoin Core nodes, contains the amount value of the UTXO
 being spent so that if an incorrect UTXO value has been passed by a malicious
 party and later signed by the signer, the transaction containing this signature
-will be rejected by the nodes.
+will be rejected by the nodes. This was added in Segwit V0 transactions as part
+of BIP 143.
 
 Futhermore, signing only the value of the UTXO being spent leaves way for a
 multi-segwit-input attack wherein the attacker makes the victim sign multiple
 times leading to invalid signatures for each UTXO (and valid for the other ones).
-The attacker can later combine all the valid signatures and broadcast this valid
+The attacker can later combines all the valid signatures and broadcast this valid
 transaction leading to over payment in the fees again! To counter this, the hash
 digest algorithm makes the signer sign values of ALL the UTXOs being spent in the
-transaction.
+transaction. This was added in Segwit V1 transactions as part of BIP 341.
 
 > // non_witness_utxos can only be dropped if the sighash type does not include SIGHASH_ANYONECANPAY
 
