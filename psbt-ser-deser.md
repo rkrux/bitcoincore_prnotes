@@ -34,3 +34,11 @@ members of the stream such as `vch` & `m_read_pos` are cleared.
 after reading the compact size because the vectors are usually prefixed with their
 lengths to let the reader know how much to read.
  https://github.com/bitcoin/bitcoin/blob/baa848b8d38187ce6b24a57cfadf1ea180209711/src/serialize.h#L872-L877 
+
+* Sometimes, the stream is a `SpanReader` object instead of `DataStream` like in
+case of `skey`. In this case, the `read` function boils down to the `SpanReader`
+one: https://github.com/bitcoin/bitcoin/blob/baa848b8d38187ce6b24a57cfadf1ea180209711/src/streams.h#L121-L133
+
+* Interestingly, for this the span keeps getting shortened everytime data is read
+off of it, which is maintained in the `m_data` member.
+ https://github.com/bitcoin/bitcoin/blob/baa848b8d38187ce6b24a57cfadf1ea180209711/src/streams.h#L132C9-L132C15
