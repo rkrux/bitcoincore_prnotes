@@ -15,8 +15,10 @@ is read into is passed as the second argument, which is overloaded.
 this overloaded `Unserialize` function:
  https://github.com/bitcoin/bitcoin/blob/baa848b8d38187ce6b24a57cfadf1ea180209711/src/serialize.h#L865-L881
 
-* The `ReadCompactSize` function handles reading data of 1, 2, 4 and 8 bytes:
+* The `ReadCompactSize` function handles reading sizes of data of 1, 2, 4 and 8 bytes:
  https://github.com/bitcoin/bitcoin/blob/master/src/serialize.h#L339
+** The `ReadCompactSize` function returns the actual size (after the compact 
+size encoding) that needs to be read. 
 
 * The `ser_readdata*` functions read the data from the passed stream that ends up
 calling the `read` function of `DataStream` that writes the read data in the passed
@@ -30,4 +32,5 @@ members of the stream such as `vch` & `m_read_pos` are cleared.
 
 * The `Unserialize` function reads the "actual" vector data from the stream later
 after reading the compact size because the vectors are usually prefixed with their
-lengths to let the reader know how much to read. 
+lengths to let the reader know how much to read.
+ https://github.com/bitcoin/bitcoin/blob/baa848b8d38187ce6b24a57cfadf1ea180209711/src/serialize.h#L872-L877 
