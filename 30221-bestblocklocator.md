@@ -22,6 +22,7 @@ reorg'ed to the previous tip that was invalidated that makes these inactive
 wallet transactions valid. This leads to missing transactions and incorrect
 balances until the user figures out to manually rescan.
 
+## Correct flow now
 Now after #30221 changes, the wallet best block locator is persisted on disk
 right after the block is invalidated. Now if the node has an unclean shutdown,
 this will be noted by the wallet & thus automatically a rescan will happen when
