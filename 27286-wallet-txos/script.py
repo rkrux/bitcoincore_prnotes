@@ -1,9 +1,15 @@
+from decimal import Decimal, getcontext
 import decimal
 import json
 import subprocess
 import pprint
 import time
 import sys
+
+NON_WALLET_ADDRESSES = ["bcrt1qpaqttjj2kwy6u3yhf2kwskyemjcskhqfcnq5ax", "bcrt1qrrkk6e6zvcet46y0ehrlrzt6kgjx6vynrxhuht", "bcrt1qyvsuagaghhx03j07an9wuxqlqhug0tjsj8puy2",
+  "bcrt1q8s576mzupz4twdykykpqrxav7j0yvj8yvxzs3p", "bcrt1qv0v5kxqupzz89e87qpkdcfx5hxdd7qtpqnyvsv", "bcrt1qwpp9nflnhl95ue4zncjludtqh9gf2hvvqzgjau",
+  "bcrt1qk2c4nl7clqn60k768xv03vgpafp87gpak08ceu", "bcrt1qazkpa2yjvd4rrvl302c8qjmqccw5l4gw6wufyy", "bcrt1qa64u65xkk42xcn9fnw75ay79pn365q80zlasdm",
+  "bcrt1qal483r47sdgs0ffgvgfvh54yux3c9rz2guys55"]
 
 def arg_to_cli(arg):
     if isinstance(arg, bool):
@@ -38,7 +44,7 @@ def send_cli(bitcoin_binary_path_with_wallet, clicommand=None, *args, **kwargs):
     try:
         if not cli_stdout.strip():
             return None
-        return json.loads(cli_stdout, parse_float=decimal.Decimal)
+        return json.loads(cli_stdout, parse_float=Decimal)
     except (json.JSONDecodeError, decimal.InvalidOperation):
         return cli_stdout.rstrip("\n")
 
@@ -54,10 +60,44 @@ def generate_addresses(bitcoin_binary_path_with_wallet):
 
     time.sleep(0.01)
 
+def spend_individual_unspent(bitcoin_binary_path_with_wallet):
+  unspents = send_cli(bitcoin_binary_path_with_wallet, "listunspent")
+  unspents.sort(key=lambda unspent: unspent["confirmations"], reverse=True)
+  unspents = unspents[:1]
+  unspent = unspents[0]
+  unspent_value = unspent["amount"]
+  receiving_same_wallet_address = send_cli(bitcoin_binary_path_with_wallet, "getnewaddress", "passthrough", "bech32")
+
+  getcontext().prec = 3
+
+  # 1% spread across non wallet addresses, +1 is done to account for fees that will be sent to the coinbase address in block generation
+  non_wallet_address_amount = (Decimal(0.01) * unspent_value) / (len(NON_WALLET_ADDRESSES) + 1)
+  # 99% back to the same wallet
+  wallet_address_amount = Decimal(0.99) * unspent_value
+  print(unspent_value, wallet_address_amount, non_wallet_address_amount, (wallet_address_amount + (non_wallet_address_amount * len(NON_WALLET_ADDRESSES))))
+  print("TxFee: ", unspent_value - (wallet_address_amount + (non_wallet_address_amount * len(NON_WALLET_ADDRESSES))))
+  all_outputs = [{receiving_same_wallet_address: str(wallet_address_amount)}] + [{NON_WALLET_ADDRESSES[index]: str(non_wallet_address_amount)} for index in range(0, len(NON_WALLET_ADDRESSES))]
+  
+  # Create Tx
+  unsigned_transaction = send_cli(bitcoin_binary_path_with_wallet, "createrawtransaction", [{"txid": unspent["txid"], "vout": unspent["vout"]}], all_outputs)
+  # pprint.pp(unsigned_transaction)
+
+  # Sign Tx
+  signed_transaction = send_cli(bitcoin_binary_path_with_wallet, "signrawtransactionwithwallet", unsigned_transaction)
+  # pprint.pp(signed_transaction)
+
+  # Send Tx
+  if signed_transaction["complete"] == True:
+     # 0 to accept any feerate; maxfeerate=100000 > 10000 per KB
+    send_response = send_cli(bitcoin_binary_path_with_wallet, "sendrawtransaction", signed_transaction["hex"], 0)
+    pprint.pp(send_response)
+  else:
+    print("Tx not signed properly: ", signed_transaction)
+
 def main():
   bitcoin_binary_path_with_wallet = sys.argv[1]
   # generate_addresses(bitcoin_binary_path_with_wallet)
-  print("create, sign, send transactions")
+  spend_individual_unspent(bitcoin_binary_path_with_wallet)
 
 if __name__ == "__main__":
     main()
