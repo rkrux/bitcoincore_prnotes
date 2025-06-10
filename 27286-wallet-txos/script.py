@@ -113,16 +113,17 @@ def spend_unspents(bitcoin_binary_path_with_wallet, unspents_to_spend):
     spend_individual_unspent(bitcoin_binary_path_with_wallet, unspents[i])
 
 def generate_blocks(bitcoin_binary_path_with_wallet, block_count):
-  for _ in range(0, block_count):
-    # Put 50+1 transactions in every block
-    spend_unspents(bitcoin_binary_path_with_wallet, 50)
+  for i in range(0, block_count):
+    # Put 10+1 transactions in every block
+    spend_unspents(bitcoin_binary_path_with_wallet, 10)
     block_generated = send_cli(bitcoin_binary_path_with_wallet, "generatetoaddress", 1, COINBASE_FEES_ADDRESS)
-    pprint.pp(block_generated)
+    print(i, block_generated)
 
 def main():
   bitcoin_binary_path_with_wallet = sys.argv[1]
-  # Generate 200 blocks each time the script is run
-  generate_blocks(bitcoin_binary_path_with_wallet, 200)
+  # Generate 1000 blocks each time the script is run
+  # More blocks lead to more unspents generated due to coinbase outputs
+  generate_blocks(bitcoin_binary_path_with_wallet, 1000)
 
 if __name__ == "__main__":
     main()
