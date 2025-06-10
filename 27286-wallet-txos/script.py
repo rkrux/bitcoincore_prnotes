@@ -32,7 +32,7 @@ def send_cli(bitcoin_binary_path_with_wallet, clicommand=None, *args, **kwargs):
     if clicommand is not None:
         p_args += [clicommand]
     p_args += pos_args + named_args
-    print("Running bitcoin-cli command: {}".format(" ".join(p_args)))
+    # print("Running bitcoin-cli command: {}".format(" ".join(p_args)))
 
     process = subprocess.Popen(p_args, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     cli_stdout, cli_stderr = process.communicate(input=None)
@@ -60,21 +60,17 @@ def generate_addresses(bitcoin_binary_path_with_wallet):
 
     time.sleep(0.01)
 
-def spend_individual_unspent(bitcoin_binary_path_with_wallet):
-  unspents = send_cli(bitcoin_binary_path_with_wallet, "listunspent")
-  unspents.sort(key=lambda unspent: unspent["confirmations"], reverse=True)
-  unspents = unspents[:1]
-  unspent = unspents[0]
-  unspent_value = unspent["amount"]
+def spend_individual_unspent(bitcoin_binary_path_with_wallet, unspent):
+  unspent_value = Decimal(unspent["amount"])
   receiving_same_wallet_address = send_cli(bitcoin_binary_path_with_wallet, "getnewaddress", "passthrough", "bech32")
 
-  getcontext().prec = 3
+  getcontext().prec = 6
 
   # 1% spread across non wallet addresses, +1 is done to account for fees that will be sent to the coinbase address in block generation
   non_wallet_address_amount = (Decimal(0.01) * unspent_value) / (len(NON_WALLET_ADDRESSES) + 1)
   # 99% back to the same wallet
   wallet_address_amount = Decimal(0.99) * unspent_value
-  print(unspent_value, wallet_address_amount, non_wallet_address_amount, (wallet_address_amount + (non_wallet_address_amount * len(NON_WALLET_ADDRESSES))))
+  # print(unspent_value, wallet_address_amount, non_wallet_address_amount, (wallet_address_amount + (non_wallet_address_amount * len(NON_WALLET_ADDRESSES))))
   print("TxFee: ", unspent_value - (wallet_address_amount + (non_wallet_address_amount * len(NON_WALLET_ADDRESSES))))
   all_outputs = [{receiving_same_wallet_address: str(wallet_address_amount)}] + [{NON_WALLET_ADDRESSES[index]: str(non_wallet_address_amount)} for index in range(0, len(NON_WALLET_ADDRESSES))]
   
@@ -94,10 +90,31 @@ def spend_individual_unspent(bitcoin_binary_path_with_wallet):
   else:
     print("Tx not signed properly: ", signed_transaction)
 
+def analyze_unspents(unspents):
+  pos = 0; zero = 0; neg = 0
+  for i in range(0, len(unspents)):
+    unspent = unspents[i]
+    if unspent["amount"] > 0:
+      pos += 1
+    elif unspent["amount"] == 0:
+      zero += 1
+    elif unspent["amount"] < 0:
+      neg += 1
+  print(pos, zero, neg, len(unspents))
+
+def spend_unspents(bitcoin_binary_path_with_wallet):
+  unspents = send_cli(bitcoin_binary_path_with_wallet, "listunspent")
+  unspents.sort(key=lambda unspent: unspent["confirmations"], reverse=True)
+  unspents = [unspent for unspent in unspents if unspent["amount"] > 0] # get unspents with some balance
+
+  unspents = unspents[:500]
+  for i in range(0, len(unspents)):
+    spend_individual_unspent(bitcoin_binary_path_with_wallet, unspents[i])
+
 def main():
   bitcoin_binary_path_with_wallet = sys.argv[1]
   # generate_addresses(bitcoin_binary_path_with_wallet)
-  spend_individual_unspent(bitcoin_binary_path_with_wallet)
+  spend_unspents(bitcoin_binary_path_with_wallet)
 
 if __name__ == "__main__":
     main()
