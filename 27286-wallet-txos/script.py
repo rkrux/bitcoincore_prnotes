@@ -6,11 +6,8 @@ import pprint
 import time
 import sys
 
-NON_WALLET_ADDRESSES = ["bcrt1qpaqttjj2kwy6u3yhf2kwskyemjcskhqfcnq5ax", "bcrt1qrrkk6e6zvcet46y0ehrlrzt6kgjx6vynrxhuht", "bcrt1qyvsuagaghhx03j07an9wuxqlqhug0tjsj8puy2",
-  "bcrt1q8s576mzupz4twdykykpqrxav7j0yvj8yvxzs3p", "bcrt1qv0v5kxqupzz89e87qpkdcfx5hxdd7qtpqnyvsv", "bcrt1qwpp9nflnhl95ue4zncjludtqh9gf2hvvqzgjau",
-  "bcrt1qk2c4nl7clqn60k768xv03vgpafp87gpak08ceu", "bcrt1qazkpa2yjvd4rrvl302c8qjmqccw5l4gw6wufyy", "bcrt1qa64u65xkk42xcn9fnw75ay79pn365q80zlasdm",
-  "bcrt1qal483r47sdgs0ffgvgfvh54yux3c9rz2guys55"]
-COINBASE_FEES_ADDRESS = "bcrt1qd8nnur2ef9vqcjz42emupejhglnune04uhunpf"
+NON_WALLET_ADDRESSES = ["", ""]
+COINBASE_FEES_ADDRESS = ""
 
 def arg_to_cli(arg):
     if isinstance(arg, bool):
@@ -109,6 +106,7 @@ def generate_blocks(bitcoin_binary_path_with_wallet, block_count):
   for i in range(0, block_count):
     # Put 10+1 transactions in every block
     spend_unspents(bitcoin_binary_path_with_wallet, 10)
+    # `generateblock` RPC doesn't pick transactions from mempool automatically and misses out on fees in coinbase outputs!
     block_generated = send_cli(bitcoin_binary_path_with_wallet, "generatetoaddress", 1, COINBASE_FEES_ADDRESS)
     print(i, block_generated)
 
