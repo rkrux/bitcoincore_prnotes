@@ -49,15 +49,10 @@ def send_cli(bitcoin_binary_path_with_wallet, clicommand=None, *args, **kwargs):
     except (json.JSONDecodeError, decimal.InvalidOperation):
         return cli_stdout.rstrip("\n")
 
-def generate_addresses(bitcoin_binary_path_with_wallet):
+def generate_coinbases(bitcoin_binary_path_with_wallet):
   for _ in range(0, 5000):
     new_address = send_cli(bitcoin_binary_path_with_wallet, "getnewaddress", "coinbase", "bech32")
-    # pprint.pp(new_address)
     response = send_cli(bitcoin_binary_path_with_wallet, "generatetoaddress", 1, new_address)
-    # pprint.pp(response)
-
-    blockcount = send_cli(bitcoin_binary_path_with_wallet, "getblockcount")
-    # pprint.pp(blockcount)
 
     time.sleep(0.01)
 
@@ -70,21 +65,18 @@ def spend_individual_unspent(bitcoin_binary_path_with_wallet, unspent):
   non_wallet_address_amount = round((Decimal(0.005) * unspent_value) / (len(NON_WALLET_ADDRESSES) + 1), 8)
   # 99.5% back to the same wallet
   wallet_address_amount = round(Decimal(0.995) * unspent_value, 8)
-  # print(unspent_value, wallet_address_amount, non_wallet_address_amount, (wallet_address_amount + (non_wallet_address_amount * len(NON_WALLET_ADDRESSES))))
   print("TxFee: ", unspent_value - (wallet_address_amount + (non_wallet_address_amount * len(NON_WALLET_ADDRESSES))))
   all_outputs = [{receiving_same_wallet_address: str(wallet_address_amount)}] + [{NON_WALLET_ADDRESSES[index]: str(non_wallet_address_amount)} for index in range(0, len(NON_WALLET_ADDRESSES))]
   
   # Create Tx
   unsigned_transaction = send_cli(bitcoin_binary_path_with_wallet, "createrawtransaction", [{"txid": unspent["txid"], "vout": unspent["vout"]}], all_outputs)
-  # pprint.pp(unsigned_transaction)
 
   # Sign Tx
   signed_transaction = send_cli(bitcoin_binary_path_with_wallet, "signrawtransactionwithwallet", unsigned_transaction)
-  # pprint.pp(signed_transaction)
 
   # Send Tx
   if signed_transaction["complete"] == True:
-     # 0 to accept any feerate; maxfeerate=100000 > 10000 per KB
+     # 0 to accept any feerate avoiding fee-exceeded errors
     send_response = send_cli(bitcoin_binary_path_with_wallet, "sendrawtransaction", signed_transaction["hex"], 0)
     pprint.pp(send_response)
   else:
@@ -109,6 +101,7 @@ def spend_unspents(bitcoin_binary_path_with_wallet, unspents_to_spend):
   unspents = [unspent for unspent in unspents if unspent["amount"] > 0] # get unspents with some balance
   # analyze_unspents(unspents)
   unspents = unspents[:unspents_to_spend]
+
   for i in range(0, len(unspents)):
     spend_individual_unspent(bitcoin_binary_path_with_wallet, unspents[i])
 
