@@ -1,0 +1,48 @@
+➜  ~ bitcoinclireg -rpcwallet=perftest getaddressesbylabel "passthrough" | jq length
+29624
+➜  ~ bitcoinclireg -rpcwallet=perftest getaddressesbylabel "coinbase" | jq length
+6117
+➜  ~ bitcoinclireg -rpcwallet=perftest getaddressesbylabel "coinbasefees" | jq length
+1
+➜  ~ bitcoinclireg -rpcwallet=perftest getaddressesbylabel "" | jq length
+2
+
+➜  ~ bitcoinclireg -rpcwallet=perftest listunspent | jq length
+7117
+➜  ~ bitcoinclireg -rpcwallet=perftest -named listtransactions count=400000 | jq length
+362621
+
+➜  ~ bitcoinclireg -rpcwallet=perftest getblockchaininfo
+{
+  "chain": "regtest",
+  "blocks": 7370,
+  "headers": 7370,
+  "bestblockhash": "242bb96567ca929e54517ab469697c8d23e81cfe1b9f27ce8f43f1128f9a41dd",
+  "bits": "207fffff",
+  "target": "7fffff0000000000000000000000000000000000000000000000000000000000",
+  "difficulty": 4.656542373906925e-10,
+  "time": 1749562023,
+  "mediantime": 1749562016,
+  "verificationprogress": 0.9976821900876025,
+  "initialblockdownload": false,
+  "chainwork": "0000000000000000000000000000000000000000000000000000000000003996",
+  "size_on_disk": 17983709,
+  "pruned": false,
+  "warnings": [
+    "This is a pre-release test build - use at your own risk - do not use for mining or merchant applications"
+  ]
+}
+
+➜  ~ bitcoinclireg -rpcwallet=perftest getbalances
+{
+  "mine": {
+    "trusted": 5855.91412774,
+    "untrusted_pending": 0.00000000,
+    "immature": 4.99184518
+  },
+  "lastprocessedblock": {
+    "hash": "242bb96567ca929e54517ab469697c8d23e81cfe1b9f27ce8f43f1128f9a41dd",
+    "height": 7370
+  }
+}
+
