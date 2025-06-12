@@ -118,3 +118,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# python3 ./script.py "absolute-path-to-bitcoin-cli-with-conf-and-rpcwallet-params"
