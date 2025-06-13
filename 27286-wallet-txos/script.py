@@ -19,6 +19,7 @@ def arg_to_cli(arg):
     else:
         return str(arg)
 
+# Reference: https://github.com/bitcoin/bitcoin/blob/d91c718a686abe4865201bf3ef1db785c5677167/test/functional/test_framework/test_node.py#L916
 def send_cli(bitcoin_binary_path_with_wallet, clicommand=None, *args, **kwargs):
     """Run bitcoin-cli command. Deserializes returned string as python object."""
     pos_args = [arg_to_cli(arg) for arg in args]
