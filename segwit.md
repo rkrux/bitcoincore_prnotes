@@ -14,8 +14,8 @@
 * This malleation doesn't invalidate the transaction because the signature is
  still valid.
 * Since the `txId` is the hash of the data that includes the `scriptSig` as well,
- a malleated signature will lead to a new transactionId, which can be problematic
- for systems dependent on the immutability of the transacion id. Lightning Network
+ a malleated signature will lead to a new transaction id, which can be problematic
+ for systems dependent on the immutability of the transacion id - Lightning Network
  particularly was affected by it.
 * A malleated transaction is still valid and is very much possible to be confirmed
  instead of the original one.
@@ -40,7 +40,7 @@
  is ever parsed by the old nodes but the segwit specific data (marker, flag, witness)
  are not sent to the old nodes because they never ask for it.
 * The old un-upgraded nodes see a transaction spending segwit input as anyone can
- spend (ACS) and together will the lack of signatures on these inputs, these transactions
+ spend (ACS) and together with the lack of signatures on these inputs, these transactions
  are valid for old un-upgraded nodes as well. One of the reasons why funds should
  not be sent to addresses that are treated as anyone can spend because ANYONE 
  CAN indeed spend them.
@@ -57,11 +57,11 @@
 * A fully serialised transaction is represented in Bytes, which is sent over the
  wire.
 * For block size calculation, a new unit `Weight Units` is used, which is calculated
- using `non-witness-data * 4 + witness-data` or `base-data-without-witness * 3 + full-tx-data`.
+ using `(non-witness-data * 4) + witness-data` or `(base-data-without-witness * 3) + full-tx-data`.
 * This discounting incentivises the users in spending the inputs MORE. Otherwise,
- the users would keep on storing bitcoins in new UTXOs and not spend them enough.
-* In absence of Segwit, besides reducing the spending activity on the network, it
-  would also increase the UTXO set size & thereby discourage the users with lower
+ the users might keep on storing bitcoins in new UTXOs and not spend them enough.
+* In absence of Segwit, due to a reduction in spending activity on the network, it
+  might also increase the UTXO set size & thereby discourage the users with lower
   system confs to run a bitcoin node.
 * The `Weight Units` is the one that's used with the block size calculation of
  `4 million WUs`.
