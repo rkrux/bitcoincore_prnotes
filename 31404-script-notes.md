@@ -134,14 +134,14 @@ there'd be a `14` hex value succeeding it - `a914`. Common scripts using it are
  ### Script Unlocking ASM/Hex
  Script | Common Unlocking ASM | Common Unlocking Hex
  ------ | -------------------- | --------------------
- P2PK | OP_PUSHBYTES_72 72_BYTES_SIG | 48<144-chars>
- P2PKH | OP_PUSHBYTES_72 72_BYTES_SIG OP_PUSHBYTES_33 33_BYTES_PUBKEY | 48<144-chars>21<66-chars>
+ P2PK | OP_PUSHBYTES_72 72_BYTES_SIG | 48{sig-144-chars}
+ P2PKH | OP_PUSHBYTES_72 72_BYTES_SIG OP_PUSHBYTES_33 33_BYTES_PUBKEY | 48{sig-144-chars}21{pubkey-66-chars}
  P2MS | OP_0 OP_PUSHBYTES_72 72_BYTES_SIG | 0048<144-chars>
- P2SH | OP_0 OP_PUSHBYTES_72 72_BYTES_SIG OP_PUSHBYTES_XX XX_BYTES_SCRIPT | 0048<144-chars><XX-in-hex><XX*2-chars>
- P2WPKH | 02 OP_PUSHBYTES_72 72_BYTES_SIG OP_PUSHBYTES_33 33_BYTES_PUBKEY | 0248<144-chars>21<66-chars
- P2WSH | 03 OP_0 OP_PUSHBYTES_72 72_BYTES_SIG OP_PUSHBYTES_XX XX_BYTES_SCRIPT | 030048<144-chars><XX-in-hex><XX*2-chars>
- P2TR - KeyPath | 01 OP_PUSHBYTES_65 65_BYTES_SIG | 0141<130-chars>
- P2TR - ScriptPath | 03 OP_PUSHBYTES_65 65_BYTES_SIG OP_PUSHBYTES_XX XX_BYTES_SCRIPT c0<32_BYTES_INTERNALPUBKEY><MERKLEPATH>
+ P2SH | OP_0 OP_PUSHBYTES_72 72_BYTES_SIG OP_PUSHBYTES_XX XX_BYTES_SCRIPT | 0048{sig-144-chars}{XX-in-hex}{script-XX*2-chars}
+ P2WPKH | 02 OP_PUSHBYTES_72 72_BYTES_SIG OP_PUSHBYTES_33 33_BYTES_PUBKEY | 0248{sig-144-chars}21{pubkey-66-chars}
+ P2WSH | 03 OP_0 OP_PUSHBYTES_72 72_BYTES_SIG OP_PUSHBYTES_XX XX_BYTES_SCRIPT | 030048{sig-144-chars}{XX-in-hex}{XX*2-chars}
+ P2TR - KeyPath | 01 OP_PUSHBYTES_65 65_BYTES_SIG | 0141{130-chars}
+ P2TR - ScriptPath (spending script with 1 checksig operation) | 03 OP_PUSHBYTES_65 65_BYTES_SIG OP_PUSHBYTES_XX XX_BYTES_SCRIPT c0{32_BYTES_INTERNALPUBKEY}{MERKLEPATH}
 
 ## Common limits/numbers:
  * 10,000 bytes for the total script size including the scriptSig. For Tapscript,
@@ -173,18 +173,18 @@ there'd be a `14` hex value succeeding it - `a914`. Common scripts using it are
  `TapLeafs or TapBranches` and then taghashing them together. **Note**: Because of
  lexographic sorting, the lower hash comes first. 
  * `Tweak` is the modulo addition of the pubkey from the `keypath`
- to the script commitment hash from the `scriptpath` ~ (KeyPathPublicKey + ScriptsTreeMerkleRoot) % N.
+ to the script commitment hash from the `scriptpath` ~ `(KeyPathPublicKey + ScriptsTreeMerkleRoot) % N`.
  * `TweakedPublicKey` is the addition to the publicKey by a new point generated
  by the multiplication of the generator point to `tweak`. Only the X-coordinate
  of the resultant point is considered, which comes out to be the final public key.
- * `scriptPubKey`: <OP_1> <OP_PUSHBYTES_32> <TWEAKED_PUBLIC_KEY>
- * **Note**: The raw 32-byte public key is used, not its hash.
+ * `scriptPubKey`: `<OP_1> <OP_PUSHBYTES_32> <TWEAKED_PUBLIC_KEY>`. **Note**: The 
+ raw 32-byte public key is used, not its hash.
  * `OP_1` at the start signifies Taproot that requires custom handling, no need
  to manually add the script elements on the stack like done in P2PKH, P2SH.
  * The addresses start from `bc1p` and are 62 chars in length.
  * Taproot uses Schnorr Signatures, which are shorter than the ECDSA signatures.
  They are usually 64-65 bytes long compared to 71-72 bytes ECDSA ones.
- * In the `witness` section, just like for the `segwit` outputs, a witness items
+ * In the `witness` section, just like for the `segwit` UTXOs, a witness items
  count is pushed first signifying the following witness items count - 1 for
  `KeyPath` spend & 3 or more for `ScriptPath` spend.
  * `OP_CHECKMULTISIG` is disabled in TapScript.
