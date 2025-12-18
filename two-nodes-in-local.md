@@ -1,24 +1,24 @@
 ### /tmp/node1/bitcoin.conf
 ```
-  1 regtest=1
-  2 [regtest]
-  3 rpcport=18001
-  4 rpcuser=test
-  5 rpcpassword=test
-  6 bind=127.0.0.1:18344 # added in the connect field of the other node
-  7 bind=127.0.0.1:18345=onion
+  regtest=1
+  [regtest]
+  rpcport=18001
+  rpcuser=test
+  rpcpassword=test
+  bind=127.0.0.1:18344 # added in the connect field of the other node
+  bind=127.0.0.1:18345=onion
 ```
 
 ### /tmp/node2/bitcoin.conf
 ```
-  1 regtest=1
-  2 [regtest]
-  3 rpcport=19001
-  4 rpcuser=test
-  5 rpcpassword=test
-  6 bind=127.0.0.1:19344
-  7 bind=127.0.0.1:19345=onion
-  8 connect=127.0.0.1:18344
+  regtest=1
+  [regtest]
+  rpcport=19001
+  rpcuser=test
+  rpcpassword=test
+  bind=127.0.0.1:19344
+  bind=127.0.0.1:19345=onion
+  connect=127.0.0.1:18344
 ```
 
 ### bitcoind, bitcoin-cli
